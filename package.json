@@ -1,0 +1,16 @@
+{
+  "name": "mqtt-helper",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "install": "npm run back:install && npm run front:install",
+    "back:install": "cd backend && npm install",
+    "back:start": "cd backend && npm run dev",
+    "front:install": "cd frontend && npm install",
+    "front:start": "cd frontend && npm run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
