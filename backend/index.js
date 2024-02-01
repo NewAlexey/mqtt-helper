@@ -41,9 +41,11 @@ app.use(function (req, res, next) {
     next()
 })
 
+const TOPIC_PREFIX = 'obninsk';
+
 app.get('/', function (req, res) {
     // Subscribe
-    req.mqttSubscribe('sdvarh', function (message) {
+    req.mqttSubscribe(TOPIC_PREFIX, function (message) {
         console.log('Received message: ' + message)
     })
 
@@ -53,7 +55,7 @@ app.get('/', function (req, res) {
 app.post('/topic', function (req, res) {
     const { topic, payload } = req.body;
 
-    req.mqttPublish('sdvarh', JSON.stringify([topic, payload]));
+    req.mqttPublish(topic, payload);
 
     res.send('MQTT is working!')
 })
