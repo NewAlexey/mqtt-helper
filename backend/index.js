@@ -1,6 +1,9 @@
 import express from 'express';
 import * as mqtt from 'mqtt';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express()
 const mqttClient = mqtt.connect('mqtt://localhost:1883')
@@ -41,11 +44,9 @@ app.use(function (req, res, next) {
     next()
 })
 
-const TOPIC_PREFIX = 'obninsk';
-
 app.get('/', function (req, res) {
     // Subscribe
-    req.mqttSubscribe(TOPIC_PREFIX, function (message) {
+    req.mqttSubscribe(process.env.TOPIC_PREFIX, function (message) {
         console.log('Received message: ' + message)
     })
 
@@ -60,6 +61,6 @@ app.post('/topic', function (req, res) {
     res.send('MQTT is working!')
 })
 
-app.listen(3000, function () {
-    console.log('Server is running on port 3000')
+app.listen(process.env.PORT, function () {
+    console.log(`Server is running on port ${process.env.PORT}`)
 })
