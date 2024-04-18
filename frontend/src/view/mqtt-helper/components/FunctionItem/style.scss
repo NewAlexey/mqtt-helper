@@ -1,0 +1,61 @@
+.form_container {
+    margin: 30px 30px 30px;
+
+    padding: 20px 30px;
+    border-radius: 15px;
+
+    -webkit-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+
+    .form_content {
+        &.hide {
+            display: none;
+        }
+    }
+
+    .toggle_button {
+        width: 40px;
+    }
+
+    .heading_container {
+        display: flex;
+        justify-content: space-between;
+        height: 27px;
+        align-items: center;
+
+        position: relative;
+    }
+
+    .settings_container {
+        display: flex;
+        margin-top: 20px;
+    }
+}
+
+.remove-icon {
+    position: absolute;
+    top: 0;
+    right: -75px;
+
+    cursor: pointer;
+
+    &:hover {
+        svg {
+            fill: red;
+        }
+    }
+}
+
+.view-toggle {
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:hover {
+        background-color: #e7e7e7;
+    }
+
+    &.hide {
+        display: none;
+    }
+}
