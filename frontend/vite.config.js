@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import dotenv from "dotenv";
 import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
+import svgr from "vite-plugin-svgr";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ export default defineConfig({
             typescript: true,
         }),
         react(),
+        svgr(),
     ],
     server: {
         port: process.env.FRONTEND_PORT,

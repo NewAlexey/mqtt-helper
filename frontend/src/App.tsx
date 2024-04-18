@@ -1,5 +1,5 @@
-export default function App() {
-    console.log("env~~", process.env);
+import { TestingPage } from "src/view/pages/TestingPage.tsx";
 
-    return <div>ehehehe</div>;
+export default function App() {
+    return <TestingPage />;
 }

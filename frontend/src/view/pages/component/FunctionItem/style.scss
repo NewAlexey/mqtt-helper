@@ -1,4 +1,4 @@
-.form_container {
+.form__container {
     margin: 30px 30px 30px;
 
     padding: 20px 30px;
@@ -8,17 +8,7 @@
     -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
 
-    .form_content {
-        &.hide {
-            display: none;
-        }
-    }
-
-    .toggle_button {
-        width: 40px;
-    }
-
-    .heading_container {
+    .form-heading__container {
         display: flex;
         justify-content: space-between;
         height: 27px;
@@ -27,7 +17,7 @@
         position: relative;
     }
 
-    .settings_container {
+    .settings__container {
         display: flex;
         margin-top: 20px;
     }
@@ -44,18 +34,5 @@
         svg {
             fill: red;
         }
-    }
-}
-
-.view-toggle {
-    cursor: pointer;
-    border-radius: 50%;
-
-    &:hover {
-        background-color: #e7e7e7;
-    }
-
-    &.hide {
-        display: none;
     }
 }

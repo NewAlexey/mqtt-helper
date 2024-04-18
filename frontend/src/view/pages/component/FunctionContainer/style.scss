@@ -1,5 +1,8 @@
-.function_container {
+.functions__container {
     padding: 20px 30px;
+
+    display: flex;
+    flex-direction: column;
 
     border-radius: 15px;
 

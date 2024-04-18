@@ -1,8 +1,6 @@
-import { getProcessEnv } from "../utils/getProcessEnv.ts";
-
-class RequestService {
-    private readonly BACKEND_PORT = getProcessEnv("BACKEND_PORT");
-    private readonly BACKEND_HOST = getProcessEnv("BACKEND_PORT");
+class MqttService {
+    private readonly BACKEND_PORT = process.env.BACKEND_PORT;
+    private readonly BACKEND_HOST = process.env.BACKEND_PORT;
 
     private readonly BACKEND_URL = `http://${this.BACKEND_HOST}:${this.BACKEND_PORT}`;
 
@@ -17,7 +15,7 @@ class RequestService {
     }
 }
 
-export default new RequestService();
+export default new MqttService();
 
 export type SendMessageToMqttPropsType = {
     topic: string;
