@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import dotenv from "dotenv";
+import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 
 dotenv.config();
@@ -12,6 +13,7 @@ export default defineConfig({
         checker({
             typescript: true,
         }),
+        react(),
     ],
     server: {
         port: process.env.FRONTEND_PORT,
