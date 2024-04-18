@@ -8,7 +8,8 @@
     "back:install": "cd backend && npm install",
     "back:start": "cd backend && npm run dev",
     "front:install": "cd frontend && npm install",
-    "front:start": "cd frontend && npm run dev"
+    "front:start": "cd frontend && npm run dev",
+    "front:build": "cd frontend && npm run build && node copy-front-build.js"
   },
   "keywords": [],
   "author": "",

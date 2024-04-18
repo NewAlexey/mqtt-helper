@@ -5,14 +5,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express()
-const mqttClient = mqtt.connect('mqtt://localhost:1883')
+const app = express();
+const mqttClient = mqtt.connect(`mqtt://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`);
 
 // Connect to the MQTT broker
 mqttClient.on('connect', function () {
     console.log('Connected to MQTT broker')
-})
+});
 
+app.use(express.static('public'));
 app.use(cors({
     origin: '*'
 }));
