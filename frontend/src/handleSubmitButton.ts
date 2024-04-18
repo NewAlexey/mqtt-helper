@@ -1,4 +1,4 @@
-import { MQTT_URL } from "./MQTT_URL.ts";
+import { BACKEND_URL } from "./BACKEND_URL.ts";
 
 export function handleSubmitButton(buttonElement: HTMLButtonElement): void {
     const getValues = async () => {
@@ -11,7 +11,7 @@ export function handleSubmitButton(buttonElement: HTMLButtonElement): void {
             ];
 
         try {
-            await fetch(MQTT_URL, {
+            await fetch(BACKEND_URL, {
                 method: "POST",
                 body: JSON.stringify({topic, payload}),
                 headers: {

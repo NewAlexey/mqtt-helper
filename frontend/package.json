@@ -13,5 +13,8 @@
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }

@@ -9,7 +9,7 @@ const backendPublicDirPath = `../${backendPublicDir}`;
 
 function copyFrontBuild() {
     rimraf(backendPublicDirPath).then(() => ncp(frontBuildSource, backendPublicDirPath, {}, () => {
-        console.log("Билд 'front' скопирован в папку `public` для 'backend'.");
+        console.log("Билд 'front' создан и скопирован в папку `public` для 'backend'.");
     }));
 }
 
