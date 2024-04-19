@@ -2,7 +2,11 @@ import { makeAutoObservable } from "mobx";
 
 import { FunctionModel } from "src/store/FunctionModel.ts";
 
-const mockFunctionModel = new FunctionModel({ id: "15", topic: "AAAAA" });
+const mockFunctionModel = new FunctionModel({
+    id: "15",
+    topic: "AAAAA",
+    payload: "",
+});
 
 export class FunctionModelListStore {
     public modelList: FunctionModel[] = [mockFunctionModel];
@@ -16,6 +20,7 @@ export class FunctionModelListStore {
             new FunctionModel({
                 id: String(new Date().getTime()),
                 topic: "",
+                payload: "",
             }),
         );
     };

@@ -15,7 +15,7 @@ export const FunctionHeading = observer(
     }: PropsType) => {
         return (
             <div className="form-heading__container">
-                <h5>Название функции для тестирования mqtt.</h5>
+                <h3>Название функции для тестирования mqtt.</h3>
                 <Switcher
                     state={isContentHide}
                     onClick={() => setIsContentHide(!isContentHide)}

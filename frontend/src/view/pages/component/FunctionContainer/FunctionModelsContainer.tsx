@@ -11,7 +11,7 @@ const FunctionModelsStore = new FunctionModelListStore();
 export const FunctionModelsContainer = observer(() => {
     return (
         <div className="functions__container">
-            <h3>Список функций</h3>
+            <h2>Список функций</h2>
             <Button
                 label="Добавить функцию"
                 className="right-alignment"

@@ -5,7 +5,8 @@ import "./style.scss";
 
 import { FunctionModel } from "src/store/FunctionModel.ts";
 import { FunctionHeading } from "src/view/pages/component/FunctionItem/heading/FunctionHeading.tsx";
-import { FunctionContent } from "src/view/pages/component/FunctionItem/content/FunctionContent.tsx";
+import { FunctionData } from "src/view/pages/component/FunctionItem/content/FunctionData.tsx";
+import { FunctionSetting } from "src/view/pages/component/FunctionItem/content/FunctionSetting.tsx";
 
 type FunctionItemPropsType = {
     functionModel: FunctionModel;
@@ -25,7 +26,13 @@ export const FunctionItem = observer(
                     setIsContentHide={setIsContentHide}
                 />
                 {!isContentHide && (
-                    <FunctionContent functionModel={functionModel} />
+                    <>
+                        <FunctionSetting
+                            mode={functionModel.mode}
+                            onChangeMode={functionModel.onChangeMode}
+                        />
+                        <FunctionData functionModel={functionModel} />
+                    </>
                 )}
             </form>
         );

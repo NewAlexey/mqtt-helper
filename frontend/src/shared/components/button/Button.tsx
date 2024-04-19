@@ -4,7 +4,7 @@ import "./style.scss";
 
 export function Button(props: IButtonProps) {
     return (
-        <button {...props}>
+        <button type={"button"} {...props}>
             <span>{props.label}</span>
         </button>
     );
