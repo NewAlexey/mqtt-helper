@@ -8,31 +8,8 @@
     -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
 
-    .form-heading__container {
-        display: flex;
-        justify-content: space-between;
-        height: 27px;
-        align-items: center;
-
-        position: relative;
-    }
-
     .settings__container {
         display: flex;
         margin-top: 20px;
-    }
-}
-
-.remove-icon {
-    position: absolute;
-    top: 0;
-    right: -75px;
-
-    cursor: pointer;
-
-    &:hover {
-        svg {
-            fill: red;
-        }
     }
 }

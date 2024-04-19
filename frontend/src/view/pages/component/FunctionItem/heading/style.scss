@@ -1,0 +1,22 @@
+.form-heading__container {
+    display: flex;
+    justify-content: space-between;
+    height: 27px;
+    align-items: center;
+
+    position: relative;
+
+    .remove-icon {
+        position: absolute;
+        top: 0;
+        right: -75px;
+
+        cursor: pointer;
+
+        &:hover {
+            svg {
+                fill: red;
+            }
+        }
+    }
+}
