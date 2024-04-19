@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
+import { clsx } from "clsx";
 
 import "./style.scss";
 
@@ -19,7 +20,12 @@ export const FunctionItem = observer(
         const [isContentHide, setIsContentHide] = useState(false);
 
         return (
-            <form className="form__container">
+            <form
+                className={clsx(
+                    "form__container",
+                    functionModel.isError && "request-error",
+                )}
+            >
                 <FunctionHeading
                     id={functionModel.id}
                     isContentHide={isContentHide}
@@ -36,6 +42,20 @@ export const FunctionItem = observer(
                         <ActionContainer
                             mode={functionModel.mode}
                             sendRequest={functionModel.sendRequest}
+                            isRunning={functionModel.isFetching}
+                            isPaused={functionModel.isPaused}
+                            startPeriodicRequest={
+                                functionModel.startPeriodicRequest
+                            }
+                            stopPeriodicRequest={
+                                functionModel.stopPeriodicRequest
+                            }
+                            pausePeriodicRequest={
+                                functionModel.pausePeriodicRequest
+                            }
+                            unpausePeriodicRequest={
+                                functionModel.unpausePeriodicRequest
+                            }
                         />
                     </>
                 )}

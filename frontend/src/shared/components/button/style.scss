@@ -21,6 +21,15 @@ button {
     &:active {
         background-color: #d5d5fd;
     }
+
+    &.button_disabled {
+        pointer-events: none;
+        border-color: #e3e3e3;
+
+        svg {
+            fill: #bebebe;
+        }
+    }
 }
 
 .button_container {
