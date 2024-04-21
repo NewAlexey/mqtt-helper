@@ -1,15 +1,21 @@
-import { PlusIcon } from "src/shared/components/icons/PlusIcon.tsx";
-import { MinusIcon } from "src/shared/components/icons/MinusIcon.tsx";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
-interface ISwitcherProps {
-    onClick: () => void;
-    state: boolean;
-}
+import "./style.scss";
 
-export function Switcher({ onClick, state }: ISwitcherProps) {
-    return state ? (
-        <PlusIcon onClick={onClick} />
-    ) : (
-        <MinusIcon onClick={onClick} />
+export function Switcher({ onClick, state }: SwitcherProps) {
+    return (
+        <div className="switcher__container">
+            {state ? (
+                <RemoveRedEyeOutlinedIcon onClick={onClick} />
+            ) : (
+                <VisibilityOffOutlinedIcon onClick={onClick} />
+            )}
+        </div>
     );
 }
+
+type SwitcherProps = {
+    onClick: () => void;
+    state: boolean;
+};

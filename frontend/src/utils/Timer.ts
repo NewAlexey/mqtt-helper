@@ -4,7 +4,8 @@ interface ITimerProps {
 }
 
 export class Timer {
-    private readonly delay: number;
+    public delay: number;
+
     private readonly handler: () => void;
 
     private startTime: number | undefined = undefined;

@@ -1,0 +1,11 @@
+@import "src/styles/colors";
+
+.switcher__container {
+    cursor: pointer;
+
+    &:hover {
+        svg {
+            fill: $primary;
+        }
+    }
+}

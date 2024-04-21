@@ -9,58 +9,58 @@
 }
 
 .form-setting__container {
-    h4 {
-        text-align: left;
-    }
-
     .setting-list__container {
         display: flex;
         align-items: flex-start;
-
         margin-top: 15px;
+        gap: 50px;
     }
 
-    .mode__container {
+    .setting-item__container {
         display: flex;
         flex-direction: column;
         gap: 10px;
 
-        .mode-button {
-            width: 207px;
-            height: fit-content;
-            padding: 5px 10px;
+        .setting-select {
+            width: 230px;
         }
+
+        .setting_delay-input {
+            label {
+                font-size: 21px;
+            }
+        }
+    }
+
+    .mode-button {
+        width: 207px;
+        height: fit-content;
+        padding: 5px 10px;
     }
 }
 
 .form-data__container {
-    h4 {
-        text-align: left;
-    }
 }
 
 .function-data__container {
     display: flex;
     margin-top: 20px;
     gap: 35px;
+
+    .data-item__content {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .select_sensor-data {
+        width: 250px;
+    }
 }
 
 .form-actions__container {
     margin-top: 25px;
     display: flex;
     justify-content: flex-end;
-    gap: 50px;
-
-    .action-button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        padding: 3px 10px;
-    }
-
-    .action-icon {
-        width: 27px;
-        height: 27px;
-    }
+    gap: 25px;
 }

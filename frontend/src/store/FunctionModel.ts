@@ -77,16 +77,24 @@ export class FunctionModel {
         this.topic = topicValue;
     };
 
-    public onChangeMode = () => {
-        this.mode = this.mode === "single" ? "periodic" : "single";
+    public onChangeMode = (mode: FunctionMode) => {
+        this.mode = mode;
     };
 
     public onChangePayload = (payloadValue: string) => {
         this.payload = payloadValue;
     };
 
+    public onChangeDelay = (delay: number) => {
+        this.delay = delay;
+        this.timer.delay = delay;
+    };
+
     private periodicRequest = async () => {
-        console.log("run periodicRequest!!");
+        console.log("this.topic", this.topic);
+        console.log("this.payload", this.payload);
+
+        //TODO uncomment this
 
         // await this.requestService.sendMessageToMqtt({
         //     topic: this.topic,
@@ -101,4 +109,4 @@ type ConstructorPropsType = {
     payload: string;
 };
 
-export type FunctionMode = "single" | "periodic";
+export type FunctionMode = "single" | "periodic" | "complex";

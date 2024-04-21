@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import PauseIcon from "@mui/icons-material/Pause";
+import StopIcon from "@mui/icons-material/Stop";
 
 import { FunctionMode } from "src/store/FunctionModel.ts";
-import { PlayIcon } from "src/shared/components/icons/PlayIcon.tsx";
-import { ActionButton } from "src/view/pages/component/FunctionItem/content/actions/ActionButton.tsx";
-import { PauseIcon } from "src/shared/components/icons/PauseIcon.tsx";
-import { StopIcon } from "src/shared/components/icons/StopIcon.tsx";
 
 export const ActionContainer = observer(
     ({
@@ -19,41 +19,80 @@ export const ActionContainer = observer(
     }: PropsType) => {
         return (
             <div className="form-actions__container">
-                {mode === "single" ? (
-                    <ActionButton
-                        label="Отправить"
+                {mode === "single" && (
+                    <Button
+                        variant="contained"
                         disabled={isRunning}
-                        className="action-button"
                         onClick={sendRequest}
-                        icon={<PlayIcon className="action-icon" />}
-                    />
-                ) : (
+                        endIcon={<SendIcon />}
+                    >
+                        Отправить
+                    </Button>
+                )}
+
+                {mode === "periodic" && (
                     <>
-                        <ActionButton
-                            label="Запустить"
+                        <Button
+                            variant="contained"
                             disabled={isRunning && !isPaused}
-                            className="action-button"
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
                                     : startPeriodicRequest
                             }
-                            icon={<PlayIcon className="action-icon" />}
-                        />
-                        <ActionButton
-                            label="Остановить"
+                            endIcon={<SendIcon />}
+                        >
+                            Запустить
+                        </Button>
+                        <Button
+                            variant="contained"
                             disabled={isPaused || !isRunning}
-                            className="action-button"
                             onClick={pausePeriodicRequest}
-                            icon={<PauseIcon className="action-icon" />}
-                        />
-                        <ActionButton
-                            label="Отменить"
+                            endIcon={<PauseIcon />}
+                        >
+                            Остановить
+                        </Button>
+                        <Button
+                            variant="contained"
                             disabled={!isRunning}
-                            className="action-button"
                             onClick={stopPeriodicRequest}
-                            icon={<StopIcon className="action-icon" />}
-                        />
+                            endIcon={<StopIcon />}
+                        >
+                            Отменить
+                        </Button>
+                    </>
+                )}
+
+                {mode === "complex" && (
+                    <>
+                        <Button
+                            variant="contained"
+                            disabled={isRunning && !isPaused}
+                            onClick={
+                                isPaused
+                                    ? unpausePeriodicRequest
+                                    : startPeriodicRequest
+                            }
+                            endIcon={<SendIcon />}
+                        >
+                            Запустить
+                        </Button>
+                        <Button
+                            variant="contained"
+                            disabled={isPaused || !isRunning}
+                            onClick={pausePeriodicRequest}
+                            endIcon={<PauseIcon />}
+                        >
+                            Остановить
+                        </Button>
+                        <Button
+                            variant="contained"
+                            disabled={!isRunning}
+                            onClick={stopPeriodicRequest}
+                            endIcon={<StopIcon />}
+                        >
+                            Отменить
+                        </Button>
                     </>
                 )}
             </div>

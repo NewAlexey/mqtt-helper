@@ -1,10 +1,12 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 
+import Typography from "@mui/material/Typography";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
 import "./style.scss";
 
 import { Switcher } from "src/shared/components/switcher/Switcher.tsx";
-import { RemoveIcon } from "src/shared/components/icons/RemoveIcon.tsx";
 
 export const FunctionHeading = observer(
     ({
@@ -15,14 +17,17 @@ export const FunctionHeading = observer(
     }: PropsType) => {
         return (
             <div className="form-heading__container">
-                <h3>Название функции для тестирования mqtt.</h3>
+                <Typography variant="h3" fontSize={20} fontWeight={500}>
+                    Название функции для тестирования mqtt
+                </Typography>
                 <Switcher
                     state={isContentHide}
                     onClick={() => setIsContentHide(!isContentHide)}
                 />
-                <RemoveIcon
+                <DeleteForeverIcon
                     onClick={() => removeFunctionModel(id)}
                     className="remove-icon"
+                    fontSize="large"
                 />
             </div>
         );

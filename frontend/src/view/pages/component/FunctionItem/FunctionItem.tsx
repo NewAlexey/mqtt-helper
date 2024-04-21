@@ -9,14 +9,20 @@ import { FunctionHeading } from "src/view/pages/component/FunctionItem/heading/F
 import { FunctionData } from "src/view/pages/component/FunctionItem/content/FunctionData.tsx";
 import { FunctionSetting } from "src/view/pages/component/FunctionItem/content/FunctionSetting.tsx";
 import { ActionContainer } from "src/view/pages/component/FunctionItem/content/ActionContainer.tsx";
+import { SensorData } from "src/store/FunctionModelListStore.ts";
 
 type FunctionItemPropsType = {
+    sensorDataList: SensorData[];
     functionModel: FunctionModel;
     removeFunctionModel: (id: string) => void;
 };
 
 export const FunctionItem = observer(
-    ({ functionModel, removeFunctionModel }: FunctionItemPropsType) => {
+    ({
+        functionModel,
+        removeFunctionModel,
+        sensorDataList,
+    }: FunctionItemPropsType) => {
         const [isContentHide, setIsContentHide] = useState(false);
 
         return (
@@ -24,6 +30,10 @@ export const FunctionItem = observer(
                 className={clsx(
                     "form__container",
                     functionModel.isError && "request-error",
+                    functionModel.isFetching && "request-running",
+                    functionModel.isPaused &&
+                        functionModel.isFetching &&
+                        "request-pause",
                 )}
             >
                 <FunctionHeading
@@ -36,9 +46,15 @@ export const FunctionItem = observer(
                     <>
                         <FunctionSetting
                             mode={functionModel.mode}
+                            delay={functionModel.delay}
+                            isRunning={functionModel.isFetching}
                             onChangeMode={functionModel.onChangeMode}
+                            onChangeDelay={functionModel.onChangeDelay}
                         />
-                        <FunctionData functionModel={functionModel} />
+                        <FunctionData
+                            functionModel={functionModel}
+                            sensorDataList={sensorDataList}
+                        />
                         <ActionContainer
                             mode={functionModel.mode}
                             sendRequest={functionModel.sendRequest}
