@@ -1,24 +1,40 @@
 import { observer } from "mobx-react-lite";
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 import { SensorData } from "src/store/FunctionModelListStore.ts";
+import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 export const TopicData = observer(
-    ({ id, topic, sensorDataList, onChangeTopic, isFetching }: PropsType) => {
+    ({
+        id,
+        topic,
+        isFetching,
+        topicError,
+        setErrorData,
+        onChangeTopic,
+        sensorDataList,
+    }: PropsType) => {
         return sensorDataList.length ? (
             <div className="data-item__content">
-                <InputLabel id="select_sensor-data">Сенсор (топик)</InputLabel>
+                <InputLabel id="select_sensor-data" error={Boolean(topicError)}>
+                    Сенсор (топик)
+                </InputLabel>
                 <Select
                     size="small"
                     labelId="select_sensor-data"
                     disabled={isFetching}
                     value={topic}
-                    onChange={(event: SelectChangeEvent) =>
-                        onChangeTopic(event.target.value)
-                    }
+                    error={Boolean(topicError)}
+                    onChange={(event: SelectChangeEvent) => {
+                        onChangeTopic(event.target.value);
+                        setErrorData((prevValue) => ({
+                            ...prevValue,
+                            topicError: "",
+                        }));
+                    }}
                     className="select_sensor-data"
                 >
                     {sensorDataList.map((sensorData) => (
@@ -32,15 +48,22 @@ export const TopicData = observer(
             </div>
         ) : (
             <div className="data-item__content">
-                <InputLabel id={`${id}_topic`}>Укажите топик</InputLabel>
+                <InputLabel id={`${id}_topic`} error={Boolean(topicError)}>
+                    Укажите топик
+                </InputLabel>
                 <TextField
                     id={`${id}_topic`}
                     label="Топик"
                     variant="outlined"
                     value={topic}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        onChangeTopic(event.target.value)
-                    }
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        onChangeTopic(event.target.value);
+                        setErrorData((prevValue) => ({
+                            ...prevValue,
+                            topicError: "",
+                        }));
+                    }}
+                    error={Boolean(topicError)}
                     size="small"
                     disabled={isFetching}
                 />
@@ -52,7 +75,9 @@ export const TopicData = observer(
 type PropsType = {
     id: string;
     topic: string;
+    topicError: string;
     isFetching: boolean;
+    setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     onChangeTopic: (topic: string) => void;
     sensorDataList: SensorData[];
 };

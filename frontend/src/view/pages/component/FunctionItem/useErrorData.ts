@@ -12,11 +12,13 @@ export const useErrorData = () => {
 };
 
 export type ErrorDataType = {
+    topicError: string;
     payloadStepError: string;
     payloadRangeError: string;
 };
 
 const initialErrorData: ErrorDataType = {
+    topicError: "",
     payloadRangeError: "",
     payloadStepError: "",
 };

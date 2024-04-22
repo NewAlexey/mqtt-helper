@@ -8,6 +8,11 @@ export enum ERROR_MESSAGE_ENUM {
     PAYLOAD_STEP_LARGE_VALUE = "Значение шага больше разницы значений payload 'От' и 'До'.",
     PAYLOAD_RANGE_FROM_WRONG_VALUE = "Значение payload 'От' не может быть больше чем 'До'.",
     PAYLOAD_RANGE_TO_WRONG_VALUE = "Значение payload 'До' не может быть больше чем 'От'.",
+    TOPIC_ERROR = "Задайте значение топика.",
+}
+
+export function isTopicValid(topic: string): boolean {
+    return !!topic;
 }
 
 export function validatePayloadData(

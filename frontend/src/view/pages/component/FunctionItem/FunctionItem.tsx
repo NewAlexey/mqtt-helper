@@ -55,6 +55,7 @@ export const FunctionItem = observer(
                         <FunctionData
                             setErrorData={setErrorData}
                             payloadRangeError={errorData.payloadRangeError}
+                            topicError={errorData.topicError}
                             functionModel={functionModel}
                             sensorDataList={sensorDataList}
                         />

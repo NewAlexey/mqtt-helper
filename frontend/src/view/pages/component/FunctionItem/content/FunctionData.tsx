@@ -14,6 +14,7 @@ import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorDat
 
 export const FunctionData = observer(
     ({
+        topicError,
         functionModel,
         sensorDataList,
         setErrorData,
@@ -32,7 +33,9 @@ export const FunctionData = observer(
                 <div className="function-data__container">
                     <TopicData
                         id={functionModel.id}
+                        topicError={topicError}
                         topic={functionModel.topic}
+                        setErrorData={setErrorData}
                         sensorDataList={sensorDataList}
                         isFetching={functionModel.isFetching}
                         onChangeTopic={functionModel.onChangeTopic}
@@ -61,9 +64,9 @@ export const FunctionData = observer(
                         />
                     )}
 
-                    {payloadRangeError ? (
+                    {payloadRangeError || topicError ? (
                         <Typography className="payload-step_error color_error">
-                            {payloadRangeError}
+                            {payloadRangeError || topicError}
                         </Typography>
                     ) : null}
                 </div>
@@ -73,6 +76,7 @@ export const FunctionData = observer(
 );
 
 type PropsType = {
+    topicError: string;
     payloadRangeError: string;
     sensorDataList: SensorData[];
     functionModel: FunctionModel;
