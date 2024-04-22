@@ -20,7 +20,6 @@ export class FunctionModel {
 
     private readonly timer: Timer = new Timer({
         frequency: this.frequency,
-        handler: () => this.periodicRequest(),
     });
 
     private readonly requestService = MqttService;
@@ -53,6 +52,7 @@ export class FunctionModel {
         this.timer.stop();
         this.isPaused = false;
         this.isFetching = false;
+        this.temporaryPayload = "";
     };
 
     public startPeriodicRequest = async () => {
@@ -100,6 +100,14 @@ export class FunctionModel {
 
     public onChangeMode = (mode: FunctionMode) => {
         this.mode = mode;
+
+        if (this.mode === "periodic") {
+            this.timer.setHandler(this.periodicRequest);
+        }
+
+        if (this.mode === "complex") {
+            this.timer.setHandler(this.complexRequest);
+        }
     };
 
     public onChangePayload = (payloadValue: string) => {
@@ -126,16 +134,44 @@ export class FunctionModel {
         this.executionMode = executionMode;
     };
 
+    public startComplexRequest = async () => {
+        this.isPaused = false;
+        this.isFetching = true;
+        this.timer.run();
+
+        //TODO добавить проверку для синусоидальной функции.
+        if (
+            this.executionMode === "increasing" ||
+            this.executionMode === "sinusoidal"
+        ) {
+            this.temporaryPayload = this.payload.payloadFrom;
+        }
+
+        if (this.executionMode === "decreasing") {
+            this.temporaryPayload = this.payload.payloadTo;
+        }
+    };
+
     private periodicRequest = async () => {
-        console.log("this.topic", this.topic);
-        console.log("this.payload", this.payload);
-
-        //TODO uncomment this
-
+        console.log("i'm periodic request!!");
         // await this.requestService.sendMessageToMqtt({
         //     topic: this.topic,
         //     payload: this.payload,
         // });
+    };
+
+    private complexRequest = async () => {
+        if (this.executionMode === "increasing") {
+            this.increaseMode();
+        }
+    };
+
+    public increaseMode = () => {
+        console.log("this", this.temporaryPayload);
+        this.temporaryPayload = String(
+            Number(this.temporaryPayload) + Number(this.payloadStep),
+        );
+        console.log("this", this.temporaryPayload);
     };
 }
 

@@ -22,6 +22,7 @@ export const ActionContainer = observer(
             startPeriodicRequest,
             pausePeriodicRequest,
             stopPeriodicRequest,
+            startComplexRequest,
             payloadStep,
             payload,
             executionMode,
@@ -36,6 +37,7 @@ export const ActionContainer = observer(
                 setErrorData,
                 sendRequest,
                 startPeriodicRequest,
+                startComplexRequest,
             });
 
         return (

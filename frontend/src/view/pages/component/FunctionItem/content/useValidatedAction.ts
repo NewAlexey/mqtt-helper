@@ -20,6 +20,7 @@ export const useValidatedAction = ({
     setErrorData,
     sendRequest,
     startPeriodicRequest,
+    startComplexRequest,
 }: PropsType) => {
     const sendSingleRequest = () =>
         validateTopic(topic, setErrorData, sendRequest);
@@ -35,7 +36,7 @@ export const useValidatedAction = ({
                     Number(payloadStep),
                     executionMode,
                 );
-                startPeriodicRequest();
+                startComplexRequest();
             } catch (error) {
                 if (error instanceof PayloadStepError) {
                     setErrorData((prevValue) => ({
@@ -66,5 +67,6 @@ type PropsType = {
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     executionMode: FunctionExecutionMode;
     sendRequest: () => void;
+    startComplexRequest: () => void;
     startPeriodicRequest: () => void;
 };

@@ -1,12 +1,12 @@
 interface ITimerProps {
     frequency: number;
-    handler: () => void;
+    handler?: () => void;
 }
 
 export class Timer {
     public frequency: number;
 
-    private readonly handler: () => void;
+    private handler: (() => void) | undefined;
 
     private startTime: number | undefined = undefined;
     private remainder: number | undefined = undefined;
@@ -15,27 +15,38 @@ export class Timer {
 
     constructor({ frequency, handler }: ITimerProps) {
         this.frequency = frequency;
-        this.handler = handler;
+
+        if (handler) {
+            this.handler = handler;
+        }
     }
 
     public run() {
+        if (!this.handler) {
+            throw new Error("You don't pass handler in Timer.");
+        }
+
         if (this.isHandlerRunning) {
             return;
         }
 
         this.startTime = Date.now();
-        this.timerId = setInterval(() => this.handler(), this.frequency);
+        this.timerId = setInterval(() => this.handler!(), this.frequency);
 
         this.isHandlerRunning = true;
     }
 
     public unpause() {
+        if (!this.handler) {
+            throw new Error("You don't pass handler in Timer.");
+        }
+
         if (!Number.isInteger(this.remainder)) {
             throw new Error("Timer. Check remainder value.");
         }
 
         setTimeout(() => {
-            this.handler();
+            this.handler!();
             this.run();
         }, this.remainder!);
         this.remainder = undefined;
@@ -51,6 +62,10 @@ export class Timer {
     public stop() {
         clearTimeout(this.timerId);
         this.isHandlerRunning = false;
+    }
+
+    public setHandler(handler: () => void): void {
+        this.handler = handler;
     }
 
     private calculateRemainder(): number {
