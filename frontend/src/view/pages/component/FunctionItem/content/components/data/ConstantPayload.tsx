@@ -3,16 +3,16 @@ import { ChangeEvent } from "react";
 import { InputLabel } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
-import { isNotNumber } from "src/utils/isNotNumber.ts";
+import { numericRegExp } from "src/utils/numericRegExp.ts";
 
 export const ConstantPayload = observer(
     ({ id, payloadConst, onChangePayload }: PropsType) => {
         const payloadInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-            if (!isNotNumber(event.target.value)) {
+            if (!numericRegExp.test(event.target.value)) {
                 return;
             }
 
-            onChangePayload(Number(event.target.value));
+            onChangePayload(event.target.value);
         };
 
         return (
@@ -32,6 +32,6 @@ export const ConstantPayload = observer(
 
 type PropsType = {
     id: string;
-    payloadConst: number;
-    onChangePayload: (payload: number) => void;
+    payloadConst: string;
+    onChangePayload: (payload: string) => void;
 };

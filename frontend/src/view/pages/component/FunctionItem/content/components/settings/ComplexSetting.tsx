@@ -7,14 +7,13 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FunctionExecutionMode } from "src/store/FunctionModel.ts";
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { numericRegExp } from "src/utils/numericRegExp.ts";
 
 const functionExecutionModeList: { value: string; description: string }[] = [
-    { value: "decreasing", description: "Убывающая" },
     { value: "increasing", description: "Возрастающая" },
+    { value: "decreasing", description: "Убывающая" },
     { value: "sinusoidal", description: "Синусоидальная" },
 ];
-
-const numericRegExpt = new RegExp(/^[\d.]*$/);
 
 export const ComplexSetting = observer(
     ({
@@ -33,7 +32,7 @@ export const ComplexSetting = observer(
         ) => {
             const value = event.target.value;
 
-            if (!numericRegExpt.test(value)) {
+            if (!numericRegExp.test(value)) {
                 return;
             }
 
@@ -41,8 +40,7 @@ export const ComplexSetting = observer(
                 ...prevValue,
                 payloadStepError: "",
             }));
-            //TODO change to string...
-            onChangePayloadStep(Number(value));
+            onChangePayloadStep(value);
         };
 
         return (
@@ -104,13 +102,13 @@ export const ComplexSetting = observer(
 );
 
 type PropsType = {
-    payloadStep: number;
+    payloadStep: string;
     frequency: number;
     isFetching: boolean;
     payloadStepError: string;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     executionMode: FunctionExecutionMode;
     onChangeFrequency: (frequency: number) => void;
-    onChangePayloadStep: (payloadStep: number) => void;
+    onChangePayloadStep: (payloadStep: string) => void;
     onChangeExecutionMode: (executionMode: FunctionExecutionMode) => void;
 };

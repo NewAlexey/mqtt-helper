@@ -68,7 +68,9 @@ function validatePayloadStep(
         throw new PayloadStepError(ERROR_MESSAGE_ENUM.PAYLOAD_STEP_WRONG_VALUE);
     }
 
-    const payloadDiff = Math.abs(payload.payloadTo - payload.payloadFrom);
+    const payloadDiff = Math.abs(
+        Number(payload.payloadTo) - Number(payload.payloadFrom),
+    );
 
     if (payloadStep > payloadDiff) {
         throw new PayloadStepError(ERROR_MESSAGE_ENUM.PAYLOAD_STEP_LARGE_VALUE);

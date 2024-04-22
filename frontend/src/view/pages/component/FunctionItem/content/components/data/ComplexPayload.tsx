@@ -7,8 +7,8 @@ import { InputLabel } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { isNotNumber } from "src/utils/isNotNumber.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { numericRegExp } from "src/utils/numericRegExp.ts";
 
 export const ComplexPayload = observer(
     ({
@@ -23,7 +23,7 @@ export const ComplexPayload = observer(
         const payloadFromInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNotNumber(event.target.value)) {
+            if (!numericRegExp.test(event.target.value)) {
                 return;
             }
 
@@ -33,14 +33,14 @@ export const ComplexPayload = observer(
             }));
             onChangeRangePayload({
                 to: payloadTo,
-                from: Number(event.target.value),
+                from: event.target.value,
             });
         };
 
         const payloadToInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNotNumber(event.target.value)) {
+            if (!numericRegExp.test(event.target.value)) {
                 return;
             }
 
@@ -50,7 +50,7 @@ export const ComplexPayload = observer(
             }));
             onChangeRangePayload({
                 from: payloadFrom,
-                to: Number(event.target.value),
+                to: event.target.value,
             });
         };
 
@@ -106,10 +106,10 @@ export const ComplexPayload = observer(
 
 type PropsType = {
     id: string;
-    payloadTo: number;
-    payloadFrom: number;
+    payloadTo: string;
+    payloadFrom: string;
     isFetching: boolean;
     payloadRangeError: string;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
-    onChangeRangePayload: (topicRange: { from: number; to: number }) => void;
+    onChangeRangePayload: (topicRange: { from: string; to: string }) => void;
 };

@@ -36,7 +36,12 @@ export const ActionContainer = observer(
             clearErrorData();
 
             try {
-                validatePayloadData(payload, payloadStep, executionMode);
+                validatePayloadData(
+                    payload,
+                    Number(payloadStep),
+                    executionMode,
+                );
+                startPeriodicRequest();
             } catch (error) {
                 if (error instanceof PayloadStepError) {
                     setErrorData((prevValue) => ({
@@ -51,11 +56,7 @@ export const ActionContainer = observer(
                         payloadRangeError: (error as PayloadRangeError).message,
                     }));
                 }
-
-                return;
             }
-
-            startPeriodicRequest();
         };
 
         return (

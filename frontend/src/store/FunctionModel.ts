@@ -9,9 +9,9 @@ export class FunctionModel {
     public payload: FunctionPayloadType;
 
     public mode: FunctionMode = "single";
-    public payloadStep: number = 0;
+    public payloadStep: string = "0";
     public frequency: number = 1000;
-    public executionMode: FunctionExecutionMode = "decreasing";
+    public executionMode: FunctionExecutionMode = "increasing";
 
     public isFetching: boolean = false;
     public isError: boolean = false;
@@ -89,7 +89,7 @@ export class FunctionModel {
         }
     };
 
-    public onChangePayloadStep = (payloadStep: number) => {
+    public onChangePayloadStep = (payloadStep: string) => {
         this.payloadStep = payloadStep;
     };
 
@@ -101,13 +101,13 @@ export class FunctionModel {
         this.mode = mode;
     };
 
-    public onChangePayload = (payloadValue: number) => {
+    public onChangePayload = (payloadValue: string) => {
         this.payload.payloadConst = payloadValue;
     };
 
     public onChangeRangePayload = (rangePayload: {
-        from: number;
-        to: number;
+        from: string;
+        to: string;
     }) => {
         this.payload = {
             payloadConst: this.payload.payloadConst,
@@ -141,15 +141,15 @@ export class FunctionModel {
 type ConstructorPropsType = {
     id: string;
     topic: string;
-    payloadTo: number;
-    payloadFrom: number;
-    payloadConst: number;
+    payloadTo: string;
+    payloadFrom: string;
+    payloadConst: string;
 };
 
 export type FunctionMode = "single" | "periodic" | "complex";
 export type FunctionExecutionMode = "decreasing" | "increasing" | "sinusoidal";
 export type FunctionPayloadType = {
-    payloadFrom: number;
-    payloadTo: number;
-    payloadConst: number;
+    payloadFrom: string;
+    payloadTo: string;
+    payloadConst: string;
 };

@@ -7,9 +7,9 @@ import { SensorModel } from "src/model/SensorModel.ts";
 const mockFunctionModel = new FunctionModel({
     id: "15",
     topic: "",
-    payloadTo: 0,
-    payloadFrom: 0,
-    payloadConst: 0,
+    payloadTo: "0",
+    payloadFrom: "0",
+    payloadConst: "0",
 });
 
 export class FunctionModelListStore {
@@ -28,9 +28,9 @@ export class FunctionModelListStore {
             new FunctionModel({
                 id: String(new Date().getTime()),
                 topic: "",
-                payloadTo: 0,
-                payloadFrom: 0,
-                payloadConst: 0,
+                payloadTo: "0",
+                payloadFrom: "0",
+                payloadConst: "0",
             }),
         );
     };
