@@ -8,6 +8,7 @@ export class FunctionModel {
     public topic: string;
     public payload: FunctionPayloadType;
 
+    public temporaryPayload: string = "";
     public mode: FunctionMode = "single";
     public payloadStep: string = "0";
     public frequency: number = 1000;

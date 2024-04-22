@@ -30,6 +30,7 @@ export const ComplexPayload = observer(
             setErrorData((prevValue) => ({
                 ...prevValue,
                 payloadRangeError: "",
+                payloadStepError: "",
             }));
             onChangeRangePayload({
                 to: payloadTo,
@@ -47,6 +48,7 @@ export const ComplexPayload = observer(
             setErrorData((prevValue) => ({
                 ...prevValue,
                 payloadRangeError: "",
+                payloadStepError: "",
             }));
             onChangeRangePayload({
                 from: payloadFrom,

@@ -8,15 +8,10 @@ import StopIcon from "@mui/icons-material/Stop";
 
 import { FunctionModel } from "src/store/FunctionModel.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
-import {
-    PayloadRangeError,
-    PayloadStepError,
-    validatePayloadData,
-    validateTopic,
-} from "src/view/pages/component/FunctionItem/validation.ts";
+import { useValidatedAction } from "src/view/pages/component/FunctionItem/content/useValidatedAction.ts";
 
 export const ActionContainer = observer(
-    ({ functionModel, setErrorData, clearErrorData }: PropsType) => {
+    ({ functionModel, setErrorData }: PropsType) => {
         const {
             mode,
             isFetching,
@@ -32,32 +27,16 @@ export const ActionContainer = observer(
             executionMode,
         } = functionModel;
 
-        const sendComplexRequestHandler = () => {
-            clearErrorData();
-
-            try {
-                validatePayloadData(
-                    payload,
-                    Number(payloadStep),
-                    executionMode,
-                );
-                startPeriodicRequest();
-            } catch (error) {
-                if (error instanceof PayloadStepError) {
-                    setErrorData((prevValue) => ({
-                        ...prevValue,
-                        payloadStepError: (error as PayloadStepError).message,
-                    }));
-                }
-
-                if (error instanceof PayloadRangeError) {
-                    setErrorData((prevValue) => ({
-                        ...prevValue,
-                        payloadRangeError: (error as PayloadRangeError).message,
-                    }));
-                }
-            }
-        };
+        const { sendSingleRequest, sendPeriodicRequest, sendComplexRequest } =
+            useValidatedAction({
+                executionMode,
+                payload,
+                payloadStep,
+                topic,
+                setErrorData,
+                sendRequest,
+                startPeriodicRequest,
+            });
 
         return (
             <div className="form-actions__container">
@@ -65,9 +44,7 @@ export const ActionContainer = observer(
                     <Button
                         variant="contained"
                         disabled={isFetching}
-                        onClick={() =>
-                            validateTopic(topic, setErrorData, sendRequest)
-                        }
+                        onClick={sendSingleRequest}
                         endIcon={<SendIcon />}
                     >
                         Отправить
@@ -82,12 +59,7 @@ export const ActionContainer = observer(
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
-                                    : () =>
-                                          validateTopic(
-                                              topic,
-                                              setErrorData,
-                                              startPeriodicRequest,
-                                          )
+                                    : sendPeriodicRequest
                             }
                             endIcon={<SendIcon />}
                         >
@@ -120,12 +92,7 @@ export const ActionContainer = observer(
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
-                                    : () =>
-                                          validateTopic(
-                                              topic,
-                                              setErrorData,
-                                              sendComplexRequestHandler,
-                                          )
+                                    : sendComplexRequest
                             }
                             endIcon={<SendIcon />}
                         >
