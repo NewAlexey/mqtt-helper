@@ -6,7 +6,6 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 import { FunctionExecutionMode } from "src/store/FunctionModel.ts";
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
-import { isNumber } from "src/utils/isNumber.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 const functionExecutionModeList: { value: string; description: string }[] = [
@@ -14,6 +13,8 @@ const functionExecutionModeList: { value: string; description: string }[] = [
     { value: "increasing", description: "Возрастающая" },
     { value: "sinusoidal", description: "Синусоидальная" },
 ];
+
+const numericRegExpt = new RegExp(/^[\d.]*$/);
 
 export const ComplexSetting = observer(
     ({
@@ -30,7 +31,9 @@ export const ComplexSetting = observer(
         const payloadStepInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNumber(event.target.value)) {
+            const value = event.target.value;
+
+            if (!numericRegExpt.test(value)) {
                 return;
             }
 
@@ -38,7 +41,8 @@ export const ComplexSetting = observer(
                 ...prevValue,
                 payloadStepError: "",
             }));
-            onChangePayloadStep(Number(event.target.value));
+            //TODO change to string...
+            onChangePayloadStep(Number(value));
         };
 
         return (

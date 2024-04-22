@@ -2,6 +2,8 @@ import {
     FunctionExecutionMode,
     FunctionPayloadType,
 } from "src/store/FunctionModel.ts";
+import React from "react";
+import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 export enum ERROR_MESSAGE_ENUM {
     PAYLOAD_STEP_WRONG_VALUE = "Задайте значение шага больше '0'.",
@@ -11,8 +13,21 @@ export enum ERROR_MESSAGE_ENUM {
     TOPIC_ERROR = "Задайте значение топика.",
 }
 
-export function isTopicValid(topic: string): boolean {
-    return !!topic;
+export function validateTopic(
+    topic: string,
+    setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>,
+    handler: () => void,
+) {
+    if (!topic) {
+        setErrorData((prevValue) => ({
+            ...prevValue,
+            topicError: ERROR_MESSAGE_ENUM.TOPIC_ERROR,
+        }));
+
+        return;
+    }
+
+    handler();
 }
 
 export function validatePayloadData(

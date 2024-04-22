@@ -3,14 +3,14 @@ import { ChangeEvent } from "react";
 
 import TextField from "@mui/material/TextField";
 import { InputAdornment, InputLabel } from "@mui/material";
-import { isNumber } from "src/utils/isNumber.ts";
+import { isNotNumber } from "src/utils/isNotNumber.ts";
 
 export const FrequencySetting = observer(
     ({ frequency, onChangeFrequency, isFetching }: PropsType) => {
         const frequencyInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNumber(event.target.value)) {
+            if (!isNotNumber(event.target.value)) {
                 return;
             }
 

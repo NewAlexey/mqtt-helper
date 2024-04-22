@@ -9,11 +9,10 @@ import StopIcon from "@mui/icons-material/Stop";
 import { FunctionModel } from "src/store/FunctionModel.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import {
-    ERROR_MESSAGE_ENUM,
-    isTopicValid,
     PayloadRangeError,
     PayloadStepError,
     validatePayloadData,
+    validateTopic,
 } from "src/view/pages/component/FunctionItem/validation.ts";
 
 export const ActionContainer = observer(
@@ -32,19 +31,6 @@ export const ActionContainer = observer(
             payload,
             executionMode,
         } = functionModel;
-
-        const validateTopic = (handler: () => void) => () => {
-            if (!isTopicValid(topic)) {
-                setErrorData((prevValue) => ({
-                    ...prevValue,
-                    topicError: ERROR_MESSAGE_ENUM.TOPIC_ERROR,
-                }));
-
-                return;
-            }
-
-            handler();
-        };
 
         const sendComplexRequestHandler = () => {
             clearErrorData();
@@ -78,7 +64,9 @@ export const ActionContainer = observer(
                     <Button
                         variant="contained"
                         disabled={isFetching}
-                        onClick={validateTopic(sendRequest)}
+                        onClick={() =>
+                            validateTopic(topic, setErrorData, sendRequest)
+                        }
                         endIcon={<SendIcon />}
                     >
                         Отправить
@@ -93,7 +81,12 @@ export const ActionContainer = observer(
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
-                                    : validateTopic(startPeriodicRequest)
+                                    : () =>
+                                          validateTopic(
+                                              topic,
+                                              setErrorData,
+                                              startPeriodicRequest,
+                                          )
                             }
                             endIcon={<SendIcon />}
                         >
@@ -126,7 +119,12 @@ export const ActionContainer = observer(
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
-                                    : validateTopic(sendComplexRequestHandler)
+                                    : () =>
+                                          validateTopic(
+                                              topic,
+                                              setErrorData,
+                                              sendComplexRequestHandler,
+                                          )
                             }
                             endIcon={<SendIcon />}
                         >

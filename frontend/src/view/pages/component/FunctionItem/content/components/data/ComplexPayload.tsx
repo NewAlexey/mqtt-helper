@@ -7,7 +7,7 @@ import { InputLabel } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { isNumber } from "src/utils/isNumber.ts";
+import { isNotNumber } from "src/utils/isNotNumber.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 export const ComplexPayload = observer(
@@ -23,7 +23,7 @@ export const ComplexPayload = observer(
         const payloadFromInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNumber(event.target.value)) {
+            if (!isNotNumber(event.target.value)) {
                 return;
             }
 
@@ -40,7 +40,7 @@ export const ComplexPayload = observer(
         const payloadToInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
         ) => {
-            if (!isNumber(event.target.value)) {
+            if (!isNotNumber(event.target.value)) {
                 return;
             }
 
