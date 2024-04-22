@@ -5,27 +5,29 @@ import TextField from "@mui/material/TextField";
 import { InputAdornment, InputLabel } from "@mui/material";
 import { isNumber } from "src/utils/isNumber.ts";
 
-export const PeriodicSetting = observer(
-    ({ delay, onChangeDelay, isRunning }: PropsType) => {
-        const delayInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+export const FrequencySetting = observer(
+    ({ frequency, onChangeFrequency, isFetching }: PropsType) => {
+        const frequencyInputHandler = (
+            event: ChangeEvent<HTMLInputElement>,
+        ) => {
             if (!isNumber(event.target.value)) {
                 return;
             }
 
-            onChangeDelay(Number(event.target.value));
+            onChangeFrequency(Number(event.target.value));
         };
 
         return (
             <div className="setting-item__container">
-                <InputLabel id="delay">Задержка</InputLabel>
+                <InputLabel id="frequency">Частота запроса</InputLabel>
                 <TextField
-                    id="delay"
+                    id="frequency"
                     variant="outlined"
                     size="small"
-                    className="setting_delay-input"
-                    disabled={isRunning}
-                    value={String(delay)}
-                    onChange={delayInputHandler}
+                    className="frequency_input"
+                    disabled={isFetching}
+                    value={String(frequency)}
+                    onChange={frequencyInputHandler}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">ms</InputAdornment>
@@ -38,7 +40,7 @@ export const PeriodicSetting = observer(
 );
 
 type PropsType = {
-    isRunning: boolean;
-    delay: number;
-    onChangeDelay: (delay: number) => void;
+    isFetching: boolean;
+    frequency: number;
+    onChangeFrequency: (frequency: number) => void;
 };

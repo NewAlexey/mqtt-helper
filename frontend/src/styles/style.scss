@@ -26,3 +26,7 @@ body {
     padding: 2rem;
     text-align: center;
 }
+
+input, div[role="combobox"] {
+    background-color: $white !important;
+}

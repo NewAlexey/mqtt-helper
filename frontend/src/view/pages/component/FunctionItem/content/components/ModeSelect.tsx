@@ -4,10 +4,18 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 import { FunctionMode } from "src/store/FunctionModel.ts";
 
+const menuItemList: { value: FunctionMode; description: string }[] = [
+    { value: "single", description: "Одиночный запрос" },
+    { value: "periodic", description: "Периодический запрос" },
+    { value: "complex", description: "Комплексный запрос" },
+];
+
 export const ModeSelect = observer(
-    ({ mode, onChangeMode, isRunning }: PropsType) => {
-        const selectHandler = (event: SelectChangeEvent<FunctionMode>) =>
+    ({ mode, onChangeMode, isFetching, clearErrorData }: PropsType) => {
+        const selectHandler = (event: SelectChangeEvent<FunctionMode>) => {
             onChangeMode(event.target.value as FunctionMode);
+            clearErrorData();
+        };
 
         return (
             <div className="setting-item__container">
@@ -15,14 +23,16 @@ export const ModeSelect = observer(
                 <Select
                     size="small"
                     labelId="function-mode"
-                    disabled={isRunning}
+                    disabled={isFetching}
                     value={mode}
                     onChange={selectHandler}
-                    className="setting-select"
+                    className="mode_select"
                 >
-                    <MenuItem value="single">Одиночный запрос</MenuItem>
-                    <MenuItem value="periodic">Периодический запрос</MenuItem>
-                    <MenuItem value="complex">Комплексный запрос</MenuItem>
+                    {menuItemList.map((menuItem) => (
+                        <MenuItem key={menuItem.value} value={menuItem.value}>
+                            {menuItem.description}
+                        </MenuItem>
+                    ))}
                 </Select>
             </div>
         );
@@ -30,7 +40,8 @@ export const ModeSelect = observer(
 );
 
 type PropsType = {
-    isRunning: boolean;
+    isFetching: boolean;
     mode: FunctionMode;
+    clearErrorData: () => void;
     onChangeMode: (mode: FunctionMode) => void;
 };

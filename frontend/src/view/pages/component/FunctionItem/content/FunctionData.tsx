@@ -1,32 +1,24 @@
-import { ChangeEvent } from "react";
 import { observer } from "mobx-react-lite";
+import React from "react";
 
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 import "./style.scss";
 
 import { FunctionModel } from "src/store/FunctionModel.ts";
 import { SensorData } from "src/store/FunctionModelListStore.ts";
-import { isNumber } from "src/utils/isNumber.ts";
+import { ComplexPayload } from "src/view/pages/component/FunctionItem/content/components/data/ComplexPayload.tsx";
+import { ConstantPayload } from "src/view/pages/component/FunctionItem/content/components/data/ConstantPayload.tsx";
+import { TopicData } from "src/view/pages/component/FunctionItem/content/components/data/TopicData.tsx";
+import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 export const FunctionData = observer(
-    ({ functionModel, sensorDataList }: PropsType) => {
-        const topicSelectHandler = (event: SelectChangeEvent) =>
-            functionModel.onChangeTopic(event.target.value);
-
-        const topicInputHandler = (event: ChangeEvent<HTMLInputElement>) =>
-            functionModel.onChangeTopic(event.target.value);
-
-        const payloadInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-            if (!isNumber(event.target.value)) {
-                return;
-            }
-
-            functionModel.onChangePayload(event.target.value);
-        };
-
+    ({
+        functionModel,
+        sensorDataList,
+        setErrorData,
+        payloadRangeError,
+    }: PropsType) => {
         return (
             <div className="form-data__container boxed-container">
                 <Typography
@@ -38,59 +30,42 @@ export const FunctionData = observer(
                     Данные запроса
                 </Typography>
                 <div className="function-data__container">
-                    {sensorDataList.length ? (
-                        <div className="data-item__content">
-                            <InputLabel id="select_sensor-data">
-                                Сенсор (топик)
-                            </InputLabel>
-                            <Select
-                                size="small"
-                                labelId="select_sensor-data"
-                                disabled={functionModel.isFetching}
-                                value={functionModel.topic}
-                                onChange={topicSelectHandler}
-                                className="select_sensor-data"
-                            >
-                                {sensorDataList.map((sensorData) => (
-                                    <MenuItem
-                                        key={sensorData.id}
-                                        value={sensorData.topic}
-                                    >
-                                        {sensorData.description}
-                                        {"\u00A0"}||{"\u00A0"}
-                                        <strong>{sensorData.topic}</strong>
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </div>
-                    ) : (
-                        <div className="data-item__content">
-                            <InputLabel id={`${functionModel.id}_topic`}>
-                                Укажите топик
-                            </InputLabel>
-                            <TextField
-                                id={`${functionModel.id}_topic`}
-                                label="Топик"
-                                variant="outlined"
-                                value={functionModel.topic}
-                                onChange={topicInputHandler}
-                                size="small"
-                                disabled={functionModel.isFetching}
-                            />
-                        </div>
-                    )}
-                    <div className="data-item__content">
-                        <InputLabel id={`${functionModel.id}_payload`}>
-                            Payload
-                        </InputLabel>
-                        <TextField
-                            id={`${functionModel.id}_payload`}
-                            variant="outlined"
-                            value={functionModel.payload}
-                            onChange={payloadInputHandler}
-                            size="small"
+                    <TopicData
+                        id={functionModel.id}
+                        topic={functionModel.topic}
+                        sensorDataList={sensorDataList}
+                        isFetching={functionModel.isFetching}
+                        onChangeTopic={functionModel.onChangeTopic}
+                    />
+
+                    {functionModel.mode === "complex" && (
+                        <ComplexPayload
+                            id={functionModel.id}
+                            isFetching={functionModel.isFetching}
+                            onChangeRangePayload={
+                                functionModel.onChangeRangePayload
+                            }
+                            payloadRangeError={payloadRangeError}
+                            setErrorData={setErrorData}
+                            payloadTo={functionModel.payload.payloadTo}
+                            payloadFrom={functionModel.payload.payloadFrom}
                         />
-                    </div>
+                    )}
+
+                    {(functionModel.mode === "single" ||
+                        functionModel.mode === "periodic") && (
+                        <ConstantPayload
+                            id={functionModel.id}
+                            onChangePayload={functionModel.onChangePayload}
+                            payloadConst={functionModel.payload.payloadConst}
+                        />
+                    )}
+
+                    {payloadRangeError ? (
+                        <Typography className="payload-step_error color_error">
+                            {payloadRangeError}
+                        </Typography>
+                    ) : null}
                 </div>
             </div>
         );
@@ -98,6 +73,8 @@ export const FunctionData = observer(
 );
 
 type PropsType = {
+    payloadRangeError: string;
     sensorDataList: SensorData[];
     functionModel: FunctionModel;
+    setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
 };

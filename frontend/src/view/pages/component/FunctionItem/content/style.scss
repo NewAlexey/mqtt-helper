@@ -3,12 +3,14 @@
     -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
 
-    padding: 15px 30px 30px;
+    padding: 15px 30px 40px;
     margin-top: 20px;
     border-radius: 15px;
 }
 
 .form-setting__container {
+    position: relative;
+
     .setting-list__container {
         display: flex;
         align-items: flex-start;
@@ -21,14 +23,30 @@
         flex-direction: column;
         gap: 10px;
 
-        .setting-select {
+        .mode_select {
             width: 230px;
         }
 
-        .setting_delay-input {
+        .payload-step_input {
+            input {
+                background-color: red;
+            };
+        }
+
+        .frequency_input {
+            width: 130px;
+
+            input {
+                padding-left: 10px;
+            }
+
             label {
                 font-size: 21px;
             }
+        }
+
+        .execution-mode_select {
+            width: 185px;
         }
     }
 
@@ -63,4 +81,9 @@
     display: flex;
     justify-content: flex-end;
     gap: 25px;
+}
+
+.payload-step_error {
+    position: absolute;
+    bottom: 9px;
 }

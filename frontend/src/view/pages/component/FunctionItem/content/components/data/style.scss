@@ -1,0 +1,21 @@
+.complex-data__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+
+    .complex-data__content {
+        display: flex;
+        gap: 30px;
+    }
+
+    .complex-data-item__container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        div {
+            width: 70px;
+        }
+    }
+}

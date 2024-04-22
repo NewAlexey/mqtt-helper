@@ -6,21 +6,37 @@ import { Timer } from "src/utils/Timer.ts";
 export class FunctionModel {
     public id: string;
     public topic: string;
-    public payload: string;
+    public payload: FunctionPayloadType;
+
     public mode: FunctionMode = "single";
+    public payloadStep: number = 0;
+    public frequency: number = 1000;
+    public executionMode: FunctionExecutionMode = "decreasing";
+
     public isFetching: boolean = false;
     public isError: boolean = false;
     public isPaused: boolean = false;
-    public delay: number = 1000;
 
     private readonly timer: Timer = new Timer({
-        delay: this.delay,
+        frequency: this.frequency,
         handler: () => this.periodicRequest(),
     });
 
     private readonly requestService = MqttService;
 
-    constructor({ id, topic, payload }: ConstructorPropsType) {
+    constructor({
+        id,
+        topic,
+        payloadTo,
+        payloadFrom,
+        payloadConst,
+    }: ConstructorPropsType) {
+        const payload = {
+            payloadFrom,
+            payloadTo,
+            payloadConst,
+        };
+
         this.id = id;
         this.topic = topic;
         this.payload = payload;
@@ -56,7 +72,7 @@ export class FunctionModel {
         try {
             await this.requestService.sendMessageToMqtt({
                 topic: this.topic,
-                payload: this.payload,
+                payload: this.payload.payloadConst,
             });
         } catch (error) {
             console.log("sendRequestError", error);
@@ -73,6 +89,10 @@ export class FunctionModel {
         }
     };
 
+    public onChangePayloadStep = (payloadStep: number) => {
+        this.payloadStep = payloadStep;
+    };
+
     public onChangeTopic = (topicValue: string): void => {
         this.topic = topicValue;
     };
@@ -81,13 +101,28 @@ export class FunctionModel {
         this.mode = mode;
     };
 
-    public onChangePayload = (payloadValue: string) => {
-        this.payload = payloadValue;
+    public onChangePayload = (payloadValue: number) => {
+        this.payload.payloadConst = payloadValue;
     };
 
-    public onChangeDelay = (delay: number) => {
-        this.delay = delay;
-        this.timer.delay = delay;
+    public onChangeRangePayload = (rangePayload: {
+        from: number;
+        to: number;
+    }) => {
+        this.payload = {
+            payloadConst: this.payload.payloadConst,
+            payloadTo: rangePayload.to,
+            payloadFrom: rangePayload.from,
+        };
+    };
+
+    public onChangeFrequency = (frequency: number) => {
+        this.frequency = frequency;
+        this.timer.frequency = frequency;
+    };
+
+    public onChangeExecutionMode = (executionMode: FunctionExecutionMode) => {
+        this.executionMode = executionMode;
     };
 
     private periodicRequest = async () => {
@@ -106,7 +141,15 @@ export class FunctionModel {
 type ConstructorPropsType = {
     id: string;
     topic: string;
-    payload: string;
+    payloadTo: number;
+    payloadFrom: number;
+    payloadConst: number;
 };
 
 export type FunctionMode = "single" | "periodic" | "complex";
+export type FunctionExecutionMode = "decreasing" | "increasing" | "sinusoidal";
+export type FunctionPayloadType = {
+    payloadFrom: number;
+    payloadTo: number;
+    payloadConst: number;
+};

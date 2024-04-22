@@ -1,28 +1,67 @@
 import { observer } from "mobx-react-lite";
+import React from "react";
+
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import PauseIcon from "@mui/icons-material/Pause";
 import StopIcon from "@mui/icons-material/Stop";
 
-import { FunctionMode } from "src/store/FunctionModel.ts";
+import { FunctionModel } from "src/store/FunctionModel.ts";
+import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import {
+    PayloadRangeError,
+    PayloadStepError,
+    validatePayloadData,
+} from "src/view/pages/component/FunctionItem/validation.ts";
 
 export const ActionContainer = observer(
-    ({
-        mode,
-        isPaused,
-        isRunning,
-        sendRequest,
-        startPeriodicRequest,
-        stopPeriodicRequest,
-        pausePeriodicRequest,
-        unpausePeriodicRequest,
-    }: PropsType) => {
+    ({ functionModel, setErrorData, clearErrorData }: PropsType) => {
+        const {
+            mode,
+            isFetching,
+            sendRequest,
+            isPaused,
+            unpausePeriodicRequest,
+            startPeriodicRequest,
+            pausePeriodicRequest,
+            stopPeriodicRequest,
+            payloadStep,
+            payload,
+            executionMode,
+        } = functionModel;
+
+        const sendComplexRequestHandler = () => {
+            clearErrorData();
+
+            try {
+                validatePayloadData(payload, payloadStep, executionMode);
+            } catch (error) {
+                if (error instanceof PayloadStepError) {
+                    setErrorData((prevValue) => ({
+                        ...prevValue,
+                        payloadStepError: (error as PayloadStepError).message,
+                    }));
+                }
+
+                if (error instanceof PayloadRangeError) {
+                    setErrorData((prevValue) => ({
+                        ...prevValue,
+                        payloadRangeError: (error as PayloadRangeError).message,
+                    }));
+                }
+
+                return;
+            }
+
+            startPeriodicRequest();
+        };
+
         return (
             <div className="form-actions__container">
                 {mode === "single" && (
                     <Button
                         variant="contained"
-                        disabled={isRunning}
+                        disabled={isFetching}
                         onClick={sendRequest}
                         endIcon={<SendIcon />}
                     >
@@ -34,7 +73,7 @@ export const ActionContainer = observer(
                     <>
                         <Button
                             variant="contained"
-                            disabled={isRunning && !isPaused}
+                            disabled={isFetching && !isPaused}
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
@@ -46,7 +85,7 @@ export const ActionContainer = observer(
                         </Button>
                         <Button
                             variant="contained"
-                            disabled={isPaused || !isRunning}
+                            disabled={isPaused || !isFetching}
                             onClick={pausePeriodicRequest}
                             endIcon={<PauseIcon />}
                         >
@@ -54,7 +93,7 @@ export const ActionContainer = observer(
                         </Button>
                         <Button
                             variant="contained"
-                            disabled={!isRunning}
+                            disabled={!isFetching}
                             onClick={stopPeriodicRequest}
                             endIcon={<StopIcon />}
                         >
@@ -67,11 +106,11 @@ export const ActionContainer = observer(
                     <>
                         <Button
                             variant="contained"
-                            disabled={isRunning && !isPaused}
+                            disabled={isFetching && !isPaused}
                             onClick={
                                 isPaused
                                     ? unpausePeriodicRequest
-                                    : startPeriodicRequest
+                                    : sendComplexRequestHandler
                             }
                             endIcon={<SendIcon />}
                         >
@@ -79,7 +118,7 @@ export const ActionContainer = observer(
                         </Button>
                         <Button
                             variant="contained"
-                            disabled={isPaused || !isRunning}
+                            disabled={isPaused || !isFetching}
                             onClick={pausePeriodicRequest}
                             endIcon={<PauseIcon />}
                         >
@@ -87,7 +126,7 @@ export const ActionContainer = observer(
                         </Button>
                         <Button
                             variant="contained"
-                            disabled={!isRunning}
+                            disabled={!isFetching}
                             onClick={stopPeriodicRequest}
                             endIcon={<StopIcon />}
                         >
@@ -101,12 +140,7 @@ export const ActionContainer = observer(
 );
 
 type PropsType = {
-    mode: FunctionMode;
-    isPaused: boolean;
-    isRunning: boolean;
-    sendRequest: () => void;
-    startPeriodicRequest: () => void;
-    pausePeriodicRequest: () => void;
-    stopPeriodicRequest: () => void;
-    unpausePeriodicRequest: () => void;
+    functionModel: FunctionModel;
+    clearErrorData: () => void;
+    setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
 };

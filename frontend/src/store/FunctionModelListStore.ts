@@ -7,7 +7,9 @@ import { SensorModel } from "src/model/SensorModel.ts";
 const mockFunctionModel = new FunctionModel({
     id: "15",
     topic: "",
-    payload: "",
+    payloadTo: 0,
+    payloadFrom: 0,
+    payloadConst: 0,
 });
 
 export class FunctionModelListStore {
@@ -26,7 +28,9 @@ export class FunctionModelListStore {
             new FunctionModel({
                 id: String(new Date().getTime()),
                 topic: "",
-                payload: "",
+                payloadTo: 0,
+                payloadFrom: 0,
+                payloadConst: 0,
             }),
         );
     };
@@ -42,11 +46,13 @@ export class FunctionModelListStore {
             const sensors = await this.backendApiService.getSensorList();
 
             runInAction(() => {
-                this.sensorDataList = sensors.map<SensorData>((sensor) => ({
-                    id: sensor.id,
-                    topic: sensor.topic,
-                    description: sensor.description,
-                }));
+                this.sensorDataList = sensors.map<SensorData>(
+                    ({ id, topic, description }) => ({
+                        id,
+                        topic,
+                        description,
+                    }),
+                );
             });
         } catch (error) {
             console.log(error);

@@ -1,32 +1,32 @@
 interface ITimerProps {
-    delay: number;
+    frequency: number;
     handler: () => void;
 }
 
 export class Timer {
-    public delay: number;
+    public frequency: number;
 
     private readonly handler: () => void;
 
     private startTime: number | undefined = undefined;
     private remainder: number | undefined = undefined;
-    private isRunning: boolean = false;
+    private isHandlerRunning: boolean = false;
     private timerId?: NodeJS.Timeout | undefined;
 
-    constructor({ delay, handler }: ITimerProps) {
-        this.delay = delay;
+    constructor({ frequency, handler }: ITimerProps) {
+        this.frequency = frequency;
         this.handler = handler;
     }
 
     public run() {
-        if (this.isRunning) {
+        if (this.isHandlerRunning) {
             return;
         }
 
         this.startTime = Date.now();
-        this.timerId = setInterval(() => this.handler(), this.delay);
+        this.timerId = setInterval(() => this.handler(), this.frequency);
 
-        this.isRunning = true;
+        this.isHandlerRunning = true;
     }
 
     public unpause() {
@@ -43,14 +43,14 @@ export class Timer {
 
     public pause() {
         clearTimeout(this.timerId);
-        this.isRunning = false;
+        this.isHandlerRunning = false;
         this.remainder = this.calculateRemainder();
         this.startTime = undefined;
     }
 
     public stop() {
         clearTimeout(this.timerId);
-        this.isRunning = false;
+        this.isHandlerRunning = false;
     }
 
     private calculateRemainder(): number {
@@ -58,6 +58,8 @@ export class Timer {
             throw new Error("Timer. Check startTime value.");
         }
 
-        return this.delay - ((Date.now() - this.startTime!) % this.delay);
+        return (
+            this.frequency - ((Date.now() - this.startTime!) % this.frequency)
+        );
     }
 }

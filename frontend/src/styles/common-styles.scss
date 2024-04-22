@@ -1,7 +1,17 @@
+@import "src/styles/colors";
+
 .right-alignment {
     margin-left: auto !important;
 }
 
 .left-alignment {
     margin-right: auto !important;
+}
+
+.color_error {
+    color: $error;
+}
+
+.Mui-error {
+    color: $error !important;
 }

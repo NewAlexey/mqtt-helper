@@ -10,6 +10,7 @@ import { FunctionData } from "src/view/pages/component/FunctionItem/content/Func
 import { FunctionSetting } from "src/view/pages/component/FunctionItem/content/FunctionSetting.tsx";
 import { ActionContainer } from "src/view/pages/component/FunctionItem/content/ActionContainer.tsx";
 import { SensorData } from "src/store/FunctionModelListStore.ts";
+import { useErrorData } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 
 type FunctionItemPropsType = {
     sensorDataList: SensorData[];
@@ -24,6 +25,7 @@ export const FunctionItem = observer(
         sensorDataList,
     }: FunctionItemPropsType) => {
         const [isContentHide, setIsContentHide] = useState(false);
+        const { errorData, setErrorData, clearErrorData } = useErrorData();
 
         return (
             <form
@@ -45,33 +47,21 @@ export const FunctionItem = observer(
                 {!isContentHide && (
                     <>
                         <FunctionSetting
-                            mode={functionModel.mode}
-                            delay={functionModel.delay}
-                            isRunning={functionModel.isFetching}
-                            onChangeMode={functionModel.onChangeMode}
-                            onChangeDelay={functionModel.onChangeDelay}
+                            functionModel={functionModel}
+                            setErrorData={setErrorData}
+                            clearErrorData={clearErrorData}
+                            payloadStepError={errorData.payloadStepError}
                         />
                         <FunctionData
+                            setErrorData={setErrorData}
+                            payloadRangeError={errorData.payloadRangeError}
                             functionModel={functionModel}
                             sensorDataList={sensorDataList}
                         />
                         <ActionContainer
-                            mode={functionModel.mode}
-                            sendRequest={functionModel.sendRequest}
-                            isRunning={functionModel.isFetching}
-                            isPaused={functionModel.isPaused}
-                            startPeriodicRequest={
-                                functionModel.startPeriodicRequest
-                            }
-                            stopPeriodicRequest={
-                                functionModel.stopPeriodicRequest
-                            }
-                            pausePeriodicRequest={
-                                functionModel.pausePeriodicRequest
-                            }
-                            unpausePeriodicRequest={
-                                functionModel.unpausePeriodicRequest
-                            }
+                            clearErrorData={clearErrorData}
+                            setErrorData={setErrorData}
+                            functionModel={functionModel}
                         />
                     </>
                 )}
