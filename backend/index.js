@@ -62,6 +62,6 @@ app.post('/topic', function (req, res) {
     res.send('MQTT is working!')
 })
 
-app.listen(process.env.BACKEND_PORT, function () {
-    console.log(`Server is running on port ${process.env.MQTT_BACKEND_PORT}`)
-})
+app.listen(process.env.MQTT_BACKEND_PORT, function () {
+    console.log(`Server is running on port ${process.env.MQTT_BACKEND_PORT}`);
+});

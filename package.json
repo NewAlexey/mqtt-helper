@@ -6,9 +6,10 @@
   "scripts": {
     "copy-env": "node copy-env.js",
     "start": "npm run back:start",
+    "build": "npm run front:build",
     "install": "npm run back:install && npm run front:install",
     "back:install": "cd backend && npm install",
-    "back:start": "npm run copy-env && cd backend && npm run dev",
+    "back:start": "npm run copy-env && cd backend && npm run prod",
     "front:install": "cd frontend && npm install",
     "front:start": "npm run copy-env && cd frontend && npm run dev",
     "front:build": "npm run copy-env && cd frontend && npm run build && node copy-front-build.js"
