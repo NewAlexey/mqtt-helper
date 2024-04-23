@@ -1,20 +1,20 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
-import { FunctionModel } from "src/store/FunctionModel.ts";
+import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
 import { BackendApiService } from "src/service/BackendApiService.ts";
 import { SensorModel } from "src/model/SensorModel.ts";
 
-const mockFunctionModel = new FunctionModel({
+const mockFunctionModel = new FunctionModelStore({
     id: "15",
-    topic: "",
-    payloadTo: "0",
-    payloadFrom: "0",
+    topic: "a",
+    payloadTo: "5",
+    payloadFrom: "1",
     payloadConst: "0",
 });
 
 export class FunctionModelListStore {
     public sensorDataList: SensorData[] = [];
-    public modelList: FunctionModel[] = [mockFunctionModel];
+    public modelList: FunctionModelStore[] = [mockFunctionModel];
 
     private readonly backendApiService = new BackendApiService();
 
@@ -25,7 +25,7 @@ export class FunctionModelListStore {
 
     public addNewModel = () => {
         this.modelList.push(
-            new FunctionModel({
+            new FunctionModelStore({
                 id: String(new Date().getTime()),
                 topic: "",
                 payloadTo: "0",
@@ -37,7 +37,7 @@ export class FunctionModelListStore {
 
     public removeModel = (id: string) => {
         this.modelList = this.modelList.filter(
-            (functionModel) => functionModel.id !== id,
+            (functionModelStore) => functionModelStore.functionData.id !== id,
         );
     };
 

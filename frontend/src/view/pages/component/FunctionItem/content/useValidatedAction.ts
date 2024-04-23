@@ -1,9 +1,5 @@
 import React from "react";
 
-import {
-    FunctionExecutionMode,
-    FunctionPayloadType,
-} from "src/store/FunctionModel.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import {
     PayloadRangeError,
@@ -11,6 +7,8 @@ import {
     validatePayloadData,
     validateTopic,
 } from "src/view/pages/component/FunctionItem/content/validation.ts";
+import { FunctionExecutionMode } from "src/store/request/ComplexRequest.ts";
+import { FunctionPayloadType } from "src/model/FunctionModel.ts";
 
 export const useValidatedAction = ({
     topic,
@@ -18,17 +16,17 @@ export const useValidatedAction = ({
     payloadStep,
     executionMode,
     setErrorData,
-    sendRequest,
+    sendSingleRequest,
     startPeriodicRequest,
     startComplexRequest,
 }: PropsType) => {
-    const sendSingleRequest = () =>
-        validateTopic(topic, setErrorData, sendRequest);
+    const singleRequestHandler = () =>
+        validateTopic(topic, setErrorData, sendSingleRequest);
 
-    const sendPeriodicRequest = () =>
+    const periodicRequestHandler = () =>
         validateTopic(topic, setErrorData, startPeriodicRequest);
 
-    const sendComplexRequest = () => {
+    const complexRequestHandler = () => {
         const sendComplexRequestHandler = () => {
             try {
                 validatePayloadData(
@@ -57,7 +55,11 @@ export const useValidatedAction = ({
         validateTopic(topic, setErrorData, sendComplexRequestHandler);
     };
 
-    return { sendSingleRequest, sendPeriodicRequest, sendComplexRequest };
+    return {
+        singleRequestHandler,
+        periodicRequestHandler,
+        complexRequestHandler,
+    };
 };
 
 type PropsType = {
@@ -66,7 +68,7 @@ type PropsType = {
     payloadStep: string;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     executionMode: FunctionExecutionMode;
-    sendRequest: () => void;
+    sendSingleRequest: () => void;
     startComplexRequest: () => void;
     startPeriodicRequest: () => void;
 };

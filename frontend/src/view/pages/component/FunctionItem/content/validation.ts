@@ -1,10 +1,8 @@
 import React from "react";
 
-import {
-    FunctionExecutionMode,
-    FunctionPayloadType,
-} from "src/store/FunctionModel.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { FunctionExecutionMode } from "src/store/request/ComplexRequest.ts";
+import { FunctionPayloadType } from "src/model/FunctionModel.ts";
 
 export enum ERROR_MESSAGE_ENUM {
     PAYLOAD_STEP_WRONG_VALUE = "Задайте значение шага больше '0'.",

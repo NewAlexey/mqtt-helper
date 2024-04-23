@@ -4,10 +4,10 @@ import React, { ChangeEvent } from "react";
 import TextField from "@mui/material/TextField";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
-import { FunctionExecutionMode } from "src/store/FunctionModel.ts";
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import { numericRegExp } from "src/utils/numericRegExp.ts";
+import { FunctionExecutionMode } from "src/store/request/ComplexRequest.ts";
 
 const functionExecutionModeList: { value: string; description: string }[] = [
     { value: "increasing", description: "Возрастающая" },
@@ -22,6 +22,7 @@ export const ComplexSetting = observer(
         payloadStep,
         setErrorData,
         executionMode,
+        clearErrorData,
         payloadStepError,
         onChangeFrequency,
         onChangePayloadStep,
@@ -56,11 +57,12 @@ export const ComplexSetting = observer(
                         value={executionMode}
                         onChange={(
                             event: SelectChangeEvent<FunctionExecutionMode>,
-                        ) =>
+                        ) => {
+                            clearErrorData();
                             onChangeExecutionMode(
                                 event.target.value as FunctionExecutionMode,
-                            )
-                        }
+                            );
+                        }}
                         className="execution-mode_select"
                     >
                         {functionExecutionModeList.map((menuItem) => (
@@ -106,6 +108,7 @@ type PropsType = {
     frequency: number;
     isFetching: boolean;
     payloadStepError: string;
+    clearErrorData: () => void;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     executionMode: FunctionExecutionMode;
     onChangeFrequency: (frequency: number) => void;

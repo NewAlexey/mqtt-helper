@@ -6,62 +6,62 @@ import SendIcon from "@mui/icons-material/Send";
 import PauseIcon from "@mui/icons-material/Pause";
 import StopIcon from "@mui/icons-material/Stop";
 
-import { FunctionModel } from "src/store/FunctionModel.ts";
+import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import { useValidatedAction } from "src/view/pages/component/FunctionItem/content/useValidatedAction.ts";
 
 export const ActionContainer = observer(
-    ({ functionModel, setErrorData }: PropsType) => {
+    ({ functionStore, setErrorData }: PropsType) => {
         const {
-            mode,
             isFetching,
-            topic,
-            sendRequest,
+            sendSingleRequest,
             isPaused,
-            unpausePeriodicRequest,
+            unpauseRequest,
             startPeriodicRequest,
-            pausePeriodicRequest,
-            stopPeriodicRequest,
+            pauseRequest,
+            stopRequest,
             startComplexRequest,
-            payloadStep,
-            payload,
             executionMode,
-        } = functionModel;
+            functionData,
+        } = functionStore;
 
-        const { sendSingleRequest, sendPeriodicRequest, sendComplexRequest } =
-            useValidatedAction({
-                executionMode,
-                payload,
-                payloadStep,
-                topic,
-                setErrorData,
-                sendRequest,
-                startPeriodicRequest,
-                startComplexRequest,
-            });
+        const {
+            singleRequestHandler,
+            periodicRequestHandler,
+            complexRequestHandler,
+        } = useValidatedAction({
+            executionMode,
+            setErrorData,
+            sendSingleRequest,
+            startPeriodicRequest,
+            startComplexRequest,
+            topic: functionData.topic,
+            payload: functionData.payload,
+            payloadStep: functionData.payloadStep,
+        });
 
         return (
             <div className="form-actions__container">
-                {mode === "single" && (
+                {functionData.mode === "single" && (
                     <Button
                         variant="contained"
                         disabled={isFetching}
-                        onClick={sendSingleRequest}
+                        onClick={singleRequestHandler}
                         endIcon={<SendIcon />}
                     >
                         Отправить
                     </Button>
                 )}
 
-                {mode === "periodic" && (
+                {functionData.mode === "periodic" && (
                     <>
                         <Button
                             variant="contained"
                             disabled={isFetching && !isPaused}
                             onClick={
                                 isPaused
-                                    ? unpausePeriodicRequest
-                                    : sendPeriodicRequest
+                                    ? unpauseRequest
+                                    : periodicRequestHandler
                             }
                             endIcon={<SendIcon />}
                         >
@@ -70,7 +70,7 @@ export const ActionContainer = observer(
                         <Button
                             variant="contained"
                             disabled={isPaused || !isFetching}
-                            onClick={pausePeriodicRequest}
+                            onClick={pauseRequest}
                             endIcon={<PauseIcon />}
                         >
                             Остановить
@@ -78,7 +78,7 @@ export const ActionContainer = observer(
                         <Button
                             variant="contained"
                             disabled={!isFetching}
-                            onClick={stopPeriodicRequest}
+                            onClick={stopRequest}
                             endIcon={<StopIcon />}
                         >
                             Отменить
@@ -86,15 +86,15 @@ export const ActionContainer = observer(
                     </>
                 )}
 
-                {mode === "complex" && (
+                {functionData.mode === "complex" && (
                     <>
                         <Button
                             variant="contained"
                             disabled={isFetching && !isPaused}
                             onClick={
                                 isPaused
-                                    ? unpausePeriodicRequest
-                                    : sendComplexRequest
+                                    ? unpauseRequest
+                                    : complexRequestHandler
                             }
                             endIcon={<SendIcon />}
                         >
@@ -103,7 +103,7 @@ export const ActionContainer = observer(
                         <Button
                             variant="contained"
                             disabled={isPaused || !isFetching}
-                            onClick={pausePeriodicRequest}
+                            onClick={pauseRequest}
                             endIcon={<PauseIcon />}
                         >
                             Остановить
@@ -111,7 +111,7 @@ export const ActionContainer = observer(
                         <Button
                             variant="contained"
                             disabled={!isFetching}
-                            onClick={stopPeriodicRequest}
+                            onClick={stopRequest}
                             endIcon={<StopIcon />}
                         >
                             Отменить
@@ -124,7 +124,7 @@ export const ActionContainer = observer(
 );
 
 type PropsType = {
-    functionModel: FunctionModel;
+    functionStore: FunctionModelStore;
     clearErrorData: () => void;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
 };

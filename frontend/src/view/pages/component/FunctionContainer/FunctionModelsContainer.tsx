@@ -23,10 +23,10 @@ export const FunctionModelsContainer = observer(() => {
                 Добавить функцию
             </Button>
             <div className="functions__content">
-                {FunctionModelsStore.modelList.map((functionModel) => (
+                {FunctionModelsStore.modelList.map((functionStore) => (
                     <FunctionItem
-                        key={functionModel.id}
-                        functionModel={functionModel}
+                        key={functionStore.functionData.id}
+                        functionStore={functionStore}
                         sensorDataList={FunctionModelsStore.sensorDataList}
                         removeFunctionModel={FunctionModelsStore.removeModel}
                     />

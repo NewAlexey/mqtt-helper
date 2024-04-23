@@ -3,7 +3,7 @@ import React from "react";
 
 import Typography from "@mui/material/Typography";
 
-import { FunctionModel } from "src/store/FunctionModel.ts";
+import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
 import { ModeSelect } from "src/view/pages/component/FunctionItem/content/components/ModeSelect.tsx";
 import { ComplexSetting } from "src/view/pages/component/FunctionItem/content/components/settings/ComplexSetting.tsx";
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
@@ -11,22 +11,26 @@ import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorDat
 
 export const FunctionSetting = observer(
     ({
-        functionModel,
+        functionStore,
         payloadStepError,
         setErrorData,
         clearErrorData,
     }: PropsType) => {
         const {
-            mode,
+            functionData,
             onChangeExecutionMode,
             executionMode,
-            onChangePayloadStep,
-            payloadStep,
-            onChangeMode,
             onChangeFrequency,
-            frequency,
             isFetching,
-        } = functionModel;
+        } = functionStore;
+
+        const {
+            mode,
+            onChangeMode,
+            frequency,
+            payloadStep,
+            onChangePayloadStep,
+        } = functionData;
 
         return (
             <div className="form-setting__container boxed-container">
@@ -60,6 +64,7 @@ export const FunctionSetting = observer(
                             payloadStep={payloadStep}
                             executionMode={executionMode}
                             setErrorData={setErrorData}
+                            clearErrorData={clearErrorData}
                             payloadStepError={payloadStepError}
                             onChangeFrequency={onChangeFrequency}
                             onChangePayloadStep={onChangePayloadStep}
@@ -78,7 +83,7 @@ export const FunctionSetting = observer(
 );
 
 type PropsType = {
-    functionModel: FunctionModel;
+    functionStore: FunctionModelStore;
     payloadStepError: string;
     clearErrorData: () => void;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;

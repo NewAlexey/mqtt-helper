@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 
 import "./style.scss";
 
-import { FunctionModel } from "src/store/FunctionModel.ts";
+import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
 import { FunctionHeading } from "src/view/pages/component/FunctionItem/heading/FunctionHeading.tsx";
 import { FunctionData } from "src/view/pages/component/FunctionItem/content/FunctionData.tsx";
 import { FunctionSetting } from "src/view/pages/component/FunctionItem/content/FunctionSetting.tsx";
@@ -14,13 +14,13 @@ import { useErrorData } from "src/view/pages/component/FunctionItem/useErrorData
 
 type FunctionItemPropsType = {
     sensorDataList: SensorData[];
-    functionModel: FunctionModel;
+    functionStore: FunctionModelStore;
     removeFunctionModel: (id: string) => void;
 };
 
 export const FunctionItem = observer(
     ({
-        functionModel,
+        functionStore,
         removeFunctionModel,
         sensorDataList,
     }: FunctionItemPropsType) => {
@@ -31,15 +31,15 @@ export const FunctionItem = observer(
             <form
                 className={clsx(
                     "form__container",
-                    functionModel.isError && "request-error",
-                    functionModel.isFetching && "request-running",
-                    functionModel.isPaused &&
-                        functionModel.isFetching &&
+                    functionStore.isError && "request-error",
+                    functionStore.isFetching && "request-running",
+                    functionStore.isPaused &&
+                        functionStore.isFetching &&
                         "request-pause",
                 )}
             >
                 <FunctionHeading
-                    id={functionModel.id}
+                    id={functionStore.functionData.id}
                     isContentHide={isContentHide}
                     removeFunctionModel={removeFunctionModel}
                     setIsContentHide={setIsContentHide}
@@ -47,7 +47,7 @@ export const FunctionItem = observer(
                 {!isContentHide && (
                     <>
                         <FunctionSetting
-                            functionModel={functionModel}
+                            functionStore={functionStore}
                             setErrorData={setErrorData}
                             clearErrorData={clearErrorData}
                             payloadStepError={errorData.payloadStepError}
@@ -56,13 +56,13 @@ export const FunctionItem = observer(
                             setErrorData={setErrorData}
                             payloadRangeError={errorData.payloadRangeError}
                             topicError={errorData.topicError}
-                            functionModel={functionModel}
+                            functionStore={functionStore}
                             sensorDataList={sensorDataList}
                         />
                         <ActionContainer
                             clearErrorData={clearErrorData}
                             setErrorData={setErrorData}
-                            functionModel={functionModel}
+                            functionStore={functionStore}
                         />
                     </>
                 )}

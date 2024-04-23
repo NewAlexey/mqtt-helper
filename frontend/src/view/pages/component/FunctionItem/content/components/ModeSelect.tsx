@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
-import { FunctionMode } from "src/store/FunctionModel.ts";
+import { FunctionMode } from "src/store/FunctionModelStore.ts";
 
 const menuItemList: { value: FunctionMode; description: string }[] = [
     { value: "single", description: "Одиночный запрос" },

@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 
 import "./style.scss";
 
-import { FunctionModel } from "src/store/FunctionModel.ts";
+import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
 import { SensorData } from "src/store/FunctionModelListStore.ts";
 import { ComplexPayload } from "src/view/pages/component/FunctionItem/content/components/data/ComplexPayload.tsx";
 import { ConstantPayload } from "src/view/pages/component/FunctionItem/content/components/data/ConstantPayload.tsx";
@@ -15,11 +15,22 @@ import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorDat
 export const FunctionData = observer(
     ({
         topicError,
-        functionModel,
+        functionStore,
         sensorDataList,
         setErrorData,
         payloadRangeError,
     }: PropsType) => {
+        const { isFetching, functionData } = functionStore;
+        const {
+            id,
+            mode,
+            topic,
+            onChangeTopic,
+            payload,
+            onChangePayload,
+            onChangeRangePayload,
+        } = functionData;
+
         return (
             <div className="form-data__container boxed-container">
                 <Typography
@@ -32,35 +43,32 @@ export const FunctionData = observer(
                 </Typography>
                 <div className="function-data__container">
                     <TopicData
-                        id={functionModel.id}
+                        id={id}
                         topicError={topicError}
-                        topic={functionModel.topic}
+                        topic={topic}
                         setErrorData={setErrorData}
                         sensorDataList={sensorDataList}
-                        isFetching={functionModel.isFetching}
-                        onChangeTopic={functionModel.onChangeTopic}
+                        isFetching={isFetching}
+                        onChangeTopic={onChangeTopic}
                     />
 
-                    {functionModel.mode === "complex" && (
+                    {mode === "complex" && (
                         <ComplexPayload
-                            id={functionModel.id}
-                            isFetching={functionModel.isFetching}
-                            onChangeRangePayload={
-                                functionModel.onChangeRangePayload
-                            }
+                            id={id}
+                            isFetching={isFetching}
+                            onChangeRangePayload={onChangeRangePayload}
                             payloadRangeError={payloadRangeError}
                             setErrorData={setErrorData}
-                            payloadTo={functionModel.payload.payloadTo}
-                            payloadFrom={functionModel.payload.payloadFrom}
+                            payloadTo={payload.payloadTo}
+                            payloadFrom={payload.payloadFrom}
                         />
                     )}
 
-                    {(functionModel.mode === "single" ||
-                        functionModel.mode === "periodic") && (
+                    {(mode === "single" || mode === "periodic") && (
                         <ConstantPayload
-                            id={functionModel.id}
-                            onChangePayload={functionModel.onChangePayload}
-                            payloadConst={functionModel.payload.payloadConst}
+                            id={id}
+                            onChangePayload={onChangePayload}
+                            payloadConst={payload.payloadConst}
                         />
                     )}
 
@@ -79,6 +87,6 @@ type PropsType = {
     topicError: string;
     payloadRangeError: string;
     sensorDataList: SensorData[];
-    functionModel: FunctionModel;
+    functionStore: FunctionModelStore;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
 };
