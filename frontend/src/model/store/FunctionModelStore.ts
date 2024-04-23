@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { Timer } from "src/utils/Timer.ts";
-import { ComplexRequest } from "src/store/request/ComplexRequest.ts";
+import { ComplexRequest } from "src/model/store/request/ComplexRequest.ts";
 import { FunctionModel } from "src/model/FunctionModel.ts";
 import MqttService from "src/service/MqttService.ts";
 

@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 
 import "./style.scss";
 
-import { FunctionItem } from "src/view/pages/component/FunctionItem/FunctionItem.tsx";
-import { FunctionModelListStore } from "src/store/FunctionModelListStore.ts";
+import { FunctionItem } from "src/view/pages/Testing/component/FunctionItem/FunctionItem.tsx";
+import { FunctionModelListStore } from "src/model/store/FunctionModelListStore.ts";
 
 const FunctionModelsStore = new FunctionModelListStore();
 

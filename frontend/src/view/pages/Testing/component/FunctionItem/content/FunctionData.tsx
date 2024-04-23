@@ -5,12 +5,12 @@ import Typography from "@mui/material/Typography";
 
 import "./style.scss";
 
-import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
-import { SensorData } from "src/store/FunctionModelListStore.ts";
-import { ComplexPayload } from "src/view/pages/component/FunctionItem/content/components/data/ComplexPayload.tsx";
-import { ConstantPayload } from "src/view/pages/component/FunctionItem/content/components/data/ConstantPayload.tsx";
-import { TopicData } from "src/view/pages/component/FunctionItem/content/components/data/TopicData.tsx";
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
+import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import { ComplexPayload } from "src/view/pages/Testing/component/FunctionItem/content/components/data/ComplexPayload.tsx";
+import { ConstantPayload } from "src/view/pages/Testing/component/FunctionItem/content/components/data/ConstantPayload.tsx";
+import { TopicData } from "src/view/pages/Testing/component/FunctionItem/content/components/data/TopicData.tsx";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 
 export const FunctionData = observer(
     ({

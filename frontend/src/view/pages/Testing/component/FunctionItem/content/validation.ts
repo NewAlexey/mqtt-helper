@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 import {
     FunctionImplementation,
     FunctionPayloadType,

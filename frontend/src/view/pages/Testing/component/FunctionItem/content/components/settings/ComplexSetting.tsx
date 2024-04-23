@@ -7,8 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { SelectChangeEvent } from "@mui/material";
 
-import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { FrequencySetting } from "src/view/pages/Testing/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 import { numericRegExp } from "src/utils/numericRegExp.ts";
 import { FunctionImplementation } from "src/model/FunctionModel.ts";
 

@@ -7,8 +7,8 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { SelectChangeEvent } from "@mui/material";
 
-import { SensorData } from "src/store/FunctionModelListStore.ts";
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 
 export const TopicData = observer(
     ({

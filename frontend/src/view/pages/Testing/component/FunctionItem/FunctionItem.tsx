@@ -4,13 +4,13 @@ import { clsx } from "clsx";
 
 import "./style.scss";
 
-import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
-import { FunctionHeading } from "src/view/pages/component/FunctionItem/heading/FunctionHeading.tsx";
-import { FunctionData } from "src/view/pages/component/FunctionItem/content/FunctionData.tsx";
-import { FunctionSetting } from "src/view/pages/component/FunctionItem/content/FunctionSetting.tsx";
-import { ActionContainer } from "src/view/pages/component/FunctionItem/content/ActionContainer.tsx";
-import { SensorData } from "src/store/FunctionModelListStore.ts";
-import { useErrorData } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
+import { FunctionHeading } from "src/view/pages/Testing/component/FunctionItem/heading/FunctionHeading.tsx";
+import { FunctionData } from "src/view/pages/Testing/component/FunctionItem/content/FunctionData.tsx";
+import { FunctionSetting } from "src/view/pages/Testing/component/FunctionItem/content/FunctionSetting.tsx";
+import { ActionContainer } from "src/view/pages/Testing/component/FunctionItem/content/ActionContainer.tsx";
+import { useErrorData } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 
 type FunctionItemPropsType = {
     sensorDataList: SensorData[];

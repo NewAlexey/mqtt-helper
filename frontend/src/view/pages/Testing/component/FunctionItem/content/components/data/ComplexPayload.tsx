@@ -7,7 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 import { numericRegExp } from "src/utils/numericRegExp.ts";
 
 export const ComplexPayload = observer(

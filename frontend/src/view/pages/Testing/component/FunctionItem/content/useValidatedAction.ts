@@ -1,12 +1,12 @@
 import React from "react";
 
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 import {
     PayloadRangeError,
     PayloadStepError,
     validatePayloadData,
     validateTopic,
-} from "src/view/pages/component/FunctionItem/content/validation.ts";
+} from "src/view/pages/Testing/component/FunctionItem/content/validation.ts";
 import {
     FunctionImplementation,
     FunctionPayloadType,

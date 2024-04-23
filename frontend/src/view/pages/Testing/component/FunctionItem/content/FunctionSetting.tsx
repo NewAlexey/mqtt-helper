@@ -3,11 +3,11 @@ import React from "react";
 
 import Typography from "@mui/material/Typography";
 
-import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
-import { ModeSelect } from "src/view/pages/component/FunctionItem/content/components/ModeSelect.tsx";
-import { ComplexSetting } from "src/view/pages/component/FunctionItem/content/components/settings/ComplexSetting.tsx";
-import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
+import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
+import { ModeSelect } from "src/view/pages/Testing/component/FunctionItem/content/components/ModeSelect.tsx";
+import { ComplexSetting } from "src/view/pages/Testing/component/FunctionItem/content/components/settings/ComplexSetting.tsx";
+import { FrequencySetting } from "src/view/pages/Testing/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 
 export const FunctionSetting = observer(
     ({

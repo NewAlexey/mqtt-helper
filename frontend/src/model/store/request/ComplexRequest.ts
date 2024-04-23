@@ -1,14 +1,8 @@
-import { makeAutoObservable } from "mobx";
-
 import { FunctionImplementation } from "src/model/FunctionModel.ts";
 
 export class ComplexRequest {
     private executionMode: ExecutionMode | null = null;
     private temporaryPayload: string = "";
-
-    constructor() {
-        makeAutoObservable(this);
-    }
 
     public getComplexRequestHandler = ({
         topic,

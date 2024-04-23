@@ -4,10 +4,10 @@ import React from "react";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 
-import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
-import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
-import { useValidatedAction } from "src/view/pages/component/FunctionItem/content/useValidatedAction.ts";
-import { DynamicActionList } from "src/view/pages/component/FunctionItem/content/components/actions/DynamicActionList.tsx";
+import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
+import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
+import { useValidatedAction } from "src/view/pages/Testing/component/FunctionItem/content/useValidatedAction.ts";
+import { DynamicActionList } from "src/view/pages/Testing/component/FunctionItem/content/components/actions/DynamicActionList.tsx";
 
 export const ActionContainer = observer(
     ({ functionStore, setErrorData }: PropsType) => {

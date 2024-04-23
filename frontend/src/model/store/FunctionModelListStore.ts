@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
-import { FunctionModelStore } from "src/store/FunctionModelStore.ts";
+import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
 import { BackendApiService } from "src/service/BackendApiService.ts";
 import { SensorModel } from "src/model/SensorModel.ts";
 

@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 
-import { FunctionModelsContainer } from "src/view/pages/component/FunctionContainer/FunctionModelsContainer.tsx";
+import { FunctionModelsContainer } from "src/view/pages/Testing/component/FunctionContainer/FunctionModelsContainer.tsx";
 
 export const TestingPage = () => {
     return (
