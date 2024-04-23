@@ -16,20 +16,16 @@ export const FunctionSetting = observer(
         setErrorData,
         clearErrorData,
     }: PropsType) => {
-        const {
-            functionData,
-            onChangeExecutionMode,
-            executionMode,
-            onChangeFrequency,
-            isFetching,
-        } = functionStore;
+        const { functionData, onChangeFrequency, isFetching } = functionStore;
 
         const {
+            frequency,
             mode,
             onChangeMode,
-            frequency,
             payloadStep,
             onChangePayloadStep,
+            executionMode,
+            onChangeExecutionMode,
         } = functionData;
 
         return (

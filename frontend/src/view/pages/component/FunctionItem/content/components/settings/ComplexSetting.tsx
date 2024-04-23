@@ -2,12 +2,15 @@ import { observer } from "mobx-react-lite";
 import React, { ChangeEvent } from "react";
 
 import TextField from "@mui/material/TextField";
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material";
 
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import { numericRegExp } from "src/utils/numericRegExp.ts";
-import { FunctionExecutionMode } from "src/store/request/ComplexRequest.ts";
+import { FunctionExecutionMode } from "src/model/FunctionModel.ts";
 
 const functionExecutionModeList: { value: string; description: string }[] = [
     { value: "increasing", description: "Возрастающая" },

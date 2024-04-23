@@ -31,11 +31,11 @@ export const FunctionItem = observer(
             <form
                 className={clsx(
                     "form__container",
-                    functionStore.isError && "request-error",
                     functionStore.isFetching && "request-running",
                     functionStore.isPaused &&
                         functionStore.isFetching &&
                         "request-pause",
+                    functionStore.isError && "request-error",
                 )}
             >
                 <FunctionHeading

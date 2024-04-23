@@ -2,7 +2,8 @@ import { observer } from "mobx-react-lite";
 import { ChangeEvent } from "react";
 
 import TextField from "@mui/material/TextField";
-import { InputAdornment, InputLabel } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
 
 import { numericRegExp } from "src/utils/numericRegExp.ts";
 

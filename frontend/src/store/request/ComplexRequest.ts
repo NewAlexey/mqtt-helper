@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
+import { FunctionExecutionMode } from "src/model/FunctionModel.ts";
 
 export class ComplexRequest {
-    public executionMode: FunctionExecutionMode = "increasing";
     private sinusoidalFunctionMode: SinusoidalRequestMode | null = null;
     private temporaryPayload: string = "";
 
@@ -9,29 +9,26 @@ export class ComplexRequest {
         makeAutoObservable(this);
     }
 
-    public onChangeExecutionMode = (executionMode: FunctionExecutionMode) => {
-        this.executionMode = executionMode;
-    };
-
     public getComplexRequestHandler = ({
         payloadStep,
         stopRequest,
         payloadTo,
         payloadFrom,
+        executionMode,
     }: ComplexRequestProps) => {
-        this.temporaryPayload = payloadFrom;
+        this.temporaryPayload = String(Number(payloadFrom).toFixed(2));
 
-        if (this.executionMode === "increasing") {
+        if (executionMode === "increasing") {
             return () =>
                 this.increaseModeRequest(payloadStep, payloadTo, stopRequest);
         }
 
-        if (this.executionMode === "decreasing") {
+        if (executionMode === "decreasing") {
             return () =>
                 this.decreaseModeRequest(payloadStep, payloadTo, stopRequest);
         }
 
-        if (this.executionMode === "sinusoidal") {
+        if (executionMode === "sinusoidal") {
             this.changeSinusoidalRequestMode(payloadTo, payloadFrom);
 
             return () =>
@@ -40,6 +37,11 @@ export class ComplexRequest {
 
         throw new Error("Check Complex request handlers.");
     };
+
+    public onStopRequest() {
+        this.temporaryPayload = "";
+        this.sinusoidalFunctionMode = null;
+    }
 
     private sinusoidalModeRequest = (
         payloadStep: string,
@@ -70,7 +72,6 @@ export class ComplexRequest {
         payloadTo: string,
         stopRequest: () => void,
     ) => {
-        console.log("increase request");
         console.log("payload~~", this.temporaryPayload);
 
         this.temporaryPayload = String(
@@ -89,7 +90,6 @@ export class ComplexRequest {
         payloadTo: string,
         stopRequest: () => void,
     ) => {
-        console.log("decrease request");
         console.log("payload~~", this.temporaryPayload);
 
         this.temporaryPayload = String(
@@ -130,11 +130,6 @@ export class ComplexRequest {
             }
         }
     }
-
-    public onStopRequest() {
-        this.temporaryPayload = "";
-        this.sinusoidalFunctionMode = null;
-    }
 }
 
 type ComplexRequestProps = {
@@ -142,7 +137,7 @@ type ComplexRequestProps = {
     payloadTo: string;
     payloadFrom: string;
     stopRequest: () => void;
+    executionMode: FunctionExecutionMode;
 };
 
 export type SinusoidalRequestMode = "increase" | "decrease";
-export type FunctionExecutionMode = "decreasing" | "increasing" | "sinusoidal";

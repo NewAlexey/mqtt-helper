@@ -3,7 +3,7 @@ import React, { ChangeEvent } from "react";
 
 import "./style.scss";
 
-import { InputLabel } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 

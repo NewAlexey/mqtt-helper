@@ -7,8 +7,10 @@ import {
     validatePayloadData,
     validateTopic,
 } from "src/view/pages/component/FunctionItem/content/validation.ts";
-import { FunctionExecutionMode } from "src/store/request/ComplexRequest.ts";
-import { FunctionPayloadType } from "src/model/FunctionModel.ts";
+import {
+    FunctionExecutionMode,
+    FunctionPayloadType,
+} from "src/model/FunctionModel.ts";
 
 export const useValidatedAction = ({
     topic,

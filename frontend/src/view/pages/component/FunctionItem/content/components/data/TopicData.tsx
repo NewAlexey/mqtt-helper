@@ -1,8 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { ChangeEvent } from "react";
 
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import { SelectChangeEvent } from "@mui/material";
 
 import { SensorData } from "src/store/FunctionModelListStore.ts";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";

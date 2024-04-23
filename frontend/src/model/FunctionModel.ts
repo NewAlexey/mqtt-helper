@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { FunctionMode } from "src/store/FunctionModelStore.ts";
 
 export class FunctionModel {
     public id: string;
@@ -8,6 +7,7 @@ export class FunctionModel {
     public mode: FunctionMode = "single";
     public payloadStep: string = "0";
     public frequency: number = 1000;
+    public executionMode: FunctionExecutionMode = "increasing";
 
     constructor({
         id,
@@ -54,6 +54,10 @@ export class FunctionModel {
     public onChangePayload = (payloadValue: string) => {
         this.payload.payloadConst = payloadValue;
     };
+
+    public onChangeExecutionMode = (executionMode: FunctionExecutionMode) => {
+        this.executionMode = executionMode;
+    };
 }
 
 type ConstructorPropsType = {
@@ -69,3 +73,6 @@ export type FunctionPayloadType = {
     payloadTo: string;
     payloadConst: string;
 };
+
+export type FunctionMode = "single" | "periodic" | "complex";
+export type FunctionExecutionMode = "decreasing" | "increasing" | "sinusoidal";

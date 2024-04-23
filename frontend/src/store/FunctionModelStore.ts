@@ -1,10 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 import { Timer } from "src/utils/Timer.ts";
-import {
-    ComplexRequest,
-    FunctionExecutionMode,
-} from "src/store/request/ComplexRequest.ts";
+import { ComplexRequest } from "src/store/request/ComplexRequest.ts";
 import { FunctionModel } from "src/model/FunctionModel.ts";
 import MqttService from "src/service/MqttService.ts";
 
@@ -27,17 +24,9 @@ export class FunctionModelStore {
         makeAutoObservable(this);
     }
 
-    public get executionMode() {
-        return this.complexRequest.executionMode;
-    }
-
     public onChangeFrequency = (frequency: number) => {
         this.functionData.frequency = frequency;
         this.timer.frequency = frequency;
-    };
-
-    public onChangeExecutionMode = (executionMode: FunctionExecutionMode) => {
-        this.complexRequest.onChangeExecutionMode(executionMode);
     };
 
     public sendSingleRequest = async () => {
@@ -63,6 +52,7 @@ export class FunctionModelStore {
 
     public stopRequest = () => {
         this.timer.stop();
+        this.isError = false;
         this.isPaused = false;
         this.isFetching = false;
         this.complexRequest.onStopRequest();
@@ -89,6 +79,7 @@ export class FunctionModelStore {
             payloadFrom: this.functionData.payload.payloadFrom,
             payloadTo: this.functionData.payload.payloadTo,
             stopRequest: this.stopRequest,
+            executionMode: this.functionData.executionMode,
         });
         this.timer.setHandler(complexHandler);
         this.startRequest();
@@ -101,11 +92,14 @@ export class FunctionModelStore {
     }
 
     private periodicRequest = async () => {
-        console.log("i'm periodic request!!");
-        // await this.requestService.sendMessageToMqtt({
-        //     topic: this.topic,
-        //     payload: this.payload,
-        // });
+        try {
+            await this.sendRequest(this.functionData.payload.payloadConst);
+        } catch (error) {
+            runInAction(() => {
+                this.isError = true;
+            });
+            console.log("periodicRequest error~~", error);
+        }
     };
 
     private sendRequest = async (payload: string) => {
@@ -123,5 +117,3 @@ type ConstructorPropsType = {
     payloadFrom: string;
     payloadConst: string;
 };
-
-export type FunctionMode = "single" | "periodic" | "complex";
