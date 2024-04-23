@@ -2,7 +2,7 @@ import React from "react";
 
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import {
-    FunctionExecutionMode,
+    FunctionImplementation,
     FunctionPayloadType,
 } from "src/model/FunctionModel.ts";
 
@@ -34,17 +34,17 @@ export function validateTopic(
 export function validatePayloadData(
     payload: FunctionPayloadType,
     payloadStep: number,
-    executionMode: FunctionExecutionMode,
+    implementation: FunctionImplementation,
 ) {
     validatePayloadStep(payload, payloadStep);
-    validateFunctionParameters(payload, executionMode);
+    validateFunctionParameters(payload, implementation);
 }
 
 function validateFunctionParameters(
     payload: FunctionPayloadType,
-    executionMode: FunctionExecutionMode,
+    implementation: FunctionImplementation,
 ): void {
-    if (executionMode === "increasing") {
+    if (implementation === "increasing") {
         if (payload.payloadTo <= payload.payloadFrom) {
             throw new PayloadRangeError(
                 ERROR_MESSAGE_ENUM.PAYLOAD_RANGE_TO_WRONG_VALUE,
@@ -52,7 +52,7 @@ function validateFunctionParameters(
         }
     }
 
-    if (executionMode === "decreasing") {
+    if (implementation === "decreasing") {
         if (payload.payloadFrom <= payload.payloadTo) {
             throw new PayloadRangeError(
                 ERROR_MESSAGE_ENUM.PAYLOAD_RANGE_FROM_WRONG_VALUE,

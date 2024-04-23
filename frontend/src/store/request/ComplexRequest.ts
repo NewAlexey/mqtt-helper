@@ -1,8 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import { FunctionExecutionMode } from "src/model/FunctionModel.ts";
+
+import { FunctionImplementation } from "src/model/FunctionModel.ts";
 
 export class ComplexRequest {
-    private sinusoidalFunctionMode: SinusoidalRequestMode | null = null;
+    private executionMode: ExecutionMode | null = null;
     private temporaryPayload: string = "";
 
     constructor() {
@@ -10,29 +11,45 @@ export class ComplexRequest {
     }
 
     public getComplexRequestHandler = ({
+        topic,
         payloadStep,
         stopRequest,
         payloadTo,
         payloadFrom,
-        executionMode,
+        implementationType,
     }: ComplexRequestProps) => {
-        this.temporaryPayload = String(Number(payloadFrom).toFixed(2));
+        this.temporaryPayload = getNormalizeString(payloadFrom);
 
-        if (executionMode === "increasing") {
+        if (implementationType === "increasing") {
             return () =>
-                this.increaseModeRequest(payloadStep, payloadTo, stopRequest);
+                this.increaseModeRequest(
+                    topic,
+                    payloadStep,
+                    payloadTo,
+                    stopRequest,
+                );
         }
 
-        if (executionMode === "decreasing") {
+        if (implementationType === "decreasing") {
             return () =>
-                this.decreaseModeRequest(payloadStep, payloadTo, stopRequest);
+                this.decreaseModeRequest(
+                    topic,
+                    payloadStep,
+                    payloadTo,
+                    stopRequest,
+                );
         }
 
-        if (executionMode === "sinusoidal") {
-            this.changeSinusoidalRequestMode(payloadTo, payloadFrom);
+        if (implementationType === "sinusoidal") {
+            this.changeSinusoidalExecutionMode(payloadTo, payloadFrom);
 
             return () =>
-                this.sinusoidalModeRequest(payloadStep, payloadTo, payloadFrom);
+                this.sinusoidalModeRequest(
+                    topic,
+                    payloadStep,
+                    payloadTo,
+                    payloadFrom,
+                );
         }
 
         throw new Error("Check Complex request handlers.");
@@ -40,43 +57,37 @@ export class ComplexRequest {
 
     public onStopRequest() {
         this.temporaryPayload = "";
-        this.sinusoidalFunctionMode = null;
+        this.executionMode = null;
     }
 
     private sinusoidalModeRequest = (
+        topic: string,
         payloadStep: string,
         payloadTo: string,
         payloadFrom: string,
     ) => {
+        console.log("topic~~", topic);
         console.log("payload~~", this.temporaryPayload);
 
-        if (this.sinusoidalFunctionMode === "increase") {
-            this.temporaryPayload = String(
-                (Number(this.temporaryPayload) + Number(payloadStep)).toFixed(
-                    2,
-                ),
-            );
+        if (this.executionMode === "increase") {
+            this.increaseTempPayload(payloadStep);
         } else {
-            this.temporaryPayload = String(
-                (Number(this.temporaryPayload) - Number(payloadStep)).toFixed(
-                    2,
-                ),
-            );
+            this.decreaseTempPayload(payloadStep);
         }
 
-        this.changeSinusoidalRequestMode(payloadTo, payloadFrom);
+        this.changeSinusoidalExecutionMode(payloadTo, payloadFrom);
     };
 
     private increaseModeRequest = (
+        topic: string,
         payloadStep: string,
         payloadTo: string,
         stopRequest: () => void,
     ) => {
-        console.log("payload~~", this.temporaryPayload);
+        console.log("call increase request, topic~~", topic);
+        console.log("call increase request, payload~~", this.temporaryPayload);
 
-        this.temporaryPayload = String(
-            (Number(this.temporaryPayload) + Number(payloadStep)).toFixed(2),
-        );
+        this.increaseTempPayload(payloadStep);
 
         if (Number(this.temporaryPayload) > Number(payloadTo)) {
             stopRequest();
@@ -86,15 +97,15 @@ export class ComplexRequest {
     };
 
     private decreaseModeRequest = (
+        topic: string,
         payloadStep: string,
         payloadTo: string,
         stopRequest: () => void,
     ) => {
-        console.log("payload~~", this.temporaryPayload);
+        console.log("call decrease request, topic~~", topic);
+        console.log("call decrease request, payload~~", this.temporaryPayload);
 
-        this.temporaryPayload = String(
-            (Number(this.temporaryPayload) - Number(payloadStep)).toFixed(2),
-        );
+        this.decreaseTempPayload(payloadStep);
 
         if (Number(this.temporaryPayload) < Number(payloadTo)) {
             stopRequest();
@@ -103,41 +114,60 @@ export class ComplexRequest {
         }
     };
 
-    private changeSinusoidalRequestMode(
+    private changeSinusoidalExecutionMode(
         payloadTo: string,
         payloadFrom: string,
     ) {
-        if (!this.sinusoidalFunctionMode) {
-            this.sinusoidalFunctionMode =
+        if (!this.executionMode) {
+            this.executionMode =
                 payloadFrom >= payloadTo ? "decrease" : "increase";
 
             return;
         }
 
-        if (this.sinusoidalFunctionMode === "increase") {
+        if (this.executionMode === "increase") {
             if (
                 Number(this.temporaryPayload) >= Number(payloadTo) &&
                 Number(this.temporaryPayload) >= Number(payloadFrom)
             ) {
-                this.sinusoidalFunctionMode = "decrease";
+                this.executionMode = "decrease";
             }
         } else {
             if (
                 Number(this.temporaryPayload) <= Number(payloadFrom) &&
                 Number(this.temporaryPayload) <= Number(payloadTo)
             ) {
-                this.sinusoidalFunctionMode = "increase";
+                this.executionMode = "increase";
             }
         }
     }
+
+    private increaseTempPayload(payloadStep: string) {
+        this.temporaryPayload = getNormalizeString(
+            Number(this.temporaryPayload) + Number(payloadStep),
+        );
+    }
+
+    private decreaseTempPayload(payloadStep: string) {
+        this.temporaryPayload = getNormalizeString(
+            Number(this.temporaryPayload) - Number(payloadStep),
+        );
+    }
+}
+
+const DECIMAL_COUNT = 2;
+
+function getNormalizeString(value: string | number): string {
+    return String(Number(value).toFixed(DECIMAL_COUNT));
 }
 
 type ComplexRequestProps = {
+    topic: string;
     payloadStep: string;
     payloadTo: string;
     payloadFrom: string;
     stopRequest: () => void;
-    executionMode: FunctionExecutionMode;
+    implementationType: FunctionImplementation;
 };
 
-export type SinusoidalRequestMode = "increase" | "decrease";
+export type ExecutionMode = "increase" | "decrease";

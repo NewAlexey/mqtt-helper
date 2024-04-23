@@ -7,7 +7,7 @@ export class FunctionModel {
     public mode: FunctionMode = "single";
     public payloadStep: string = "0";
     public frequency: number = 1000;
-    public executionMode: FunctionExecutionMode = "increasing";
+    public implementation: FunctionImplementation = "increasing";
 
     constructor({
         id,
@@ -55,8 +55,10 @@ export class FunctionModel {
         this.payload.payloadConst = payloadValue;
     };
 
-    public onChangeExecutionMode = (executionMode: FunctionExecutionMode) => {
-        this.executionMode = executionMode;
+    public onChangeImplementation = (
+        implementation: FunctionImplementation,
+    ) => {
+        this.implementation = implementation;
     };
 }
 
@@ -75,4 +77,4 @@ export type FunctionPayloadType = {
 };
 
 export type FunctionMode = "single" | "periodic" | "complex";
-export type FunctionExecutionMode = "decreasing" | "increasing" | "sinusoidal";
+export type FunctionImplementation = "decreasing" | "increasing" | "sinusoidal";

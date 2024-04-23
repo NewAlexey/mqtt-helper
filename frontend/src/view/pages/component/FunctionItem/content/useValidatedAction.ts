@@ -8,7 +8,7 @@ import {
     validateTopic,
 } from "src/view/pages/component/FunctionItem/content/validation.ts";
 import {
-    FunctionExecutionMode,
+    FunctionImplementation,
     FunctionPayloadType,
 } from "src/model/FunctionModel.ts";
 
@@ -16,7 +16,7 @@ export const useValidatedAction = ({
     topic,
     payload,
     payloadStep,
-    executionMode,
+    implementation,
     setErrorData,
     sendSingleRequest,
     startPeriodicRequest,
@@ -34,7 +34,7 @@ export const useValidatedAction = ({
                 validatePayloadData(
                     payload,
                     Number(payloadStep),
-                    executionMode,
+                    implementation,
                 );
                 startComplexRequest();
             } catch (error) {
@@ -69,7 +69,7 @@ type PropsType = {
     payload: FunctionPayloadType;
     payloadStep: string;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
-    executionMode: FunctionExecutionMode;
+    implementation: FunctionImplementation;
     sendSingleRequest: () => void;
     startComplexRequest: () => void;
     startPeriodicRequest: () => void;

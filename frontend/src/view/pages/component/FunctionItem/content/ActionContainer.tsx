@@ -35,7 +35,7 @@ export const ActionContainer = observer(
             topic: functionData.topic,
             payload: functionData.payload,
             payloadStep: functionData.payloadStep,
-            executionMode: functionData.executionMode,
+            implementation: functionData.implementation,
         });
 
         return (

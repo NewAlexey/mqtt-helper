@@ -24,8 +24,8 @@ export const FunctionSetting = observer(
             onChangeMode,
             payloadStep,
             onChangePayloadStep,
-            executionMode,
-            onChangeExecutionMode,
+            implementation,
+            onChangeImplementation,
         } = functionData;
 
         return (
@@ -58,13 +58,13 @@ export const FunctionSetting = observer(
                             frequency={frequency}
                             isFetching={isFetching}
                             payloadStep={payloadStep}
-                            executionMode={executionMode}
+                            implementation={implementation}
                             setErrorData={setErrorData}
                             clearErrorData={clearErrorData}
                             payloadStepError={payloadStepError}
                             onChangeFrequency={onChangeFrequency}
                             onChangePayloadStep={onChangePayloadStep}
-                            onChangeExecutionMode={onChangeExecutionMode}
+                            onChangeImplementation={onChangeImplementation}
                         />
                     )}
                 </div>

@@ -75,11 +75,12 @@ export class FunctionModelStore {
 
     public startComplexRequest = async () => {
         const complexHandler = this.complexRequest.getComplexRequestHandler({
+            topic: this.functionData.topic,
             payloadStep: this.functionData.payloadStep,
-            payloadFrom: this.functionData.payload.payloadFrom,
             payloadTo: this.functionData.payload.payloadTo,
+            payloadFrom: this.functionData.payload.payloadFrom,
+            implementationType: this.functionData.implementation,
             stopRequest: this.stopRequest,
-            executionMode: this.functionData.executionMode,
         });
         this.timer.setHandler(complexHandler);
         this.startRequest();

@@ -10,9 +10,9 @@ import { SelectChangeEvent } from "@mui/material";
 import { FrequencySetting } from "src/view/pages/component/FunctionItem/content/components/settings/FrequencySetting.tsx";
 import { ErrorDataType } from "src/view/pages/component/FunctionItem/useErrorData.ts";
 import { numericRegExp } from "src/utils/numericRegExp.ts";
-import { FunctionExecutionMode } from "src/model/FunctionModel.ts";
+import { FunctionImplementation } from "src/model/FunctionModel.ts";
 
-const functionExecutionModeList: { value: string; description: string }[] = [
+const functionImplementationList: { value: string; description: string }[] = [
     { value: "increasing", description: "Возрастающая" },
     { value: "decreasing", description: "Убывающая" },
     { value: "sinusoidal", description: "Синусоидальная" },
@@ -24,12 +24,12 @@ export const ComplexSetting = observer(
         isFetching,
         payloadStep,
         setErrorData,
-        executionMode,
+        implementation,
         clearErrorData,
         payloadStepError,
         onChangeFrequency,
         onChangePayloadStep,
-        onChangeExecutionMode,
+        onChangeImplementation,
     }: PropsType) => {
         const payloadStepInputHandler = (
             event: ChangeEvent<HTMLInputElement>,
@@ -50,25 +50,25 @@ export const ComplexSetting = observer(
         return (
             <>
                 <div className="setting-item__container">
-                    <InputLabel id="function-execution-mode">
-                        Тип функции выполнения
+                    <InputLabel id="function-implementation-mode">
+                        Тип выполнения функции
                     </InputLabel>
                     <Select
                         size="small"
-                        labelId="function-execution-mode"
+                        labelId="function-implementation-mode"
                         disabled={isFetching}
-                        value={executionMode}
+                        value={implementation}
                         onChange={(
-                            event: SelectChangeEvent<FunctionExecutionMode>,
+                            event: SelectChangeEvent<FunctionImplementation>,
                         ) => {
                             clearErrorData();
-                            onChangeExecutionMode(
-                                event.target.value as FunctionExecutionMode,
+                            onChangeImplementation(
+                                event.target.value as FunctionImplementation,
                             );
                         }}
-                        className="execution-mode_select"
+                        className="implementation-mode_select"
                     >
-                        {functionExecutionModeList.map((menuItem) => (
+                        {functionImplementationList.map((menuItem) => (
                             <MenuItem
                                 key={menuItem.value}
                                 value={menuItem.value}
@@ -113,8 +113,8 @@ type PropsType = {
     payloadStepError: string;
     clearErrorData: () => void;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
-    executionMode: FunctionExecutionMode;
+    implementation: FunctionImplementation;
     onChangeFrequency: (frequency: number) => void;
     onChangePayloadStep: (payloadStep: string) => void;
-    onChangeExecutionMode: (executionMode: FunctionExecutionMode) => void;
+    onChangeImplementation: (implementation: FunctionImplementation) => void;
 };
