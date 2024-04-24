@@ -2,7 +2,10 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 import { Timer } from "src/utils/Timer.ts";
 import { ComplexRequest } from "src/model/store/request/ComplexRequest.ts";
-import { FunctionModel } from "src/model/FunctionModel.ts";
+import {
+    FunctionModel,
+    FunctionModelPropsType,
+} from "src/model/FunctionModel.ts";
 import MqttService from "src/service/MqttService.ts";
 
 export class FunctionModelStore {
@@ -111,10 +114,4 @@ export class FunctionModelStore {
     };
 }
 
-type ConstructorPropsType = {
-    id: string;
-    topic: string;
-    payloadTo: string;
-    payloadFrom: string;
-    payloadConst: string;
-};
+type ConstructorPropsType = FunctionModelPropsType;

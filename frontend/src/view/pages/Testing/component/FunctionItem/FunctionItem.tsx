@@ -43,6 +43,10 @@ export const FunctionItem = observer(
                     isContentHide={isContentHide}
                     removeFunctionModel={removeFunctionModel}
                     setIsContentHide={setIsContentHide}
+                    functionTitle={functionStore.functionData.title}
+                    onChangeFunctionTitle={
+                        functionStore.functionData.onChangeTitle
+                    }
                 />
                 {!isContentHide && (
                     <>

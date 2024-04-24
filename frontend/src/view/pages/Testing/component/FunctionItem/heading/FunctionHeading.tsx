@@ -1,32 +1,36 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 
-import Typography from "@mui/material/Typography";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import "./style.scss";
 
 import { Switcher } from "src/shared/components/switcher/Switcher.tsx";
+import { EditableHeading } from "src/view/pages/Testing/component/FunctionItem/heading/EditableHeading.tsx";
 
 export const FunctionHeading = observer(
     ({
         id,
         isContentHide,
+        functionTitle,
         setIsContentHide,
         removeFunctionModel,
+        onChangeFunctionTitle,
     }: PropsType) => {
         return (
             <div className="form-heading__container">
-                <Typography variant="h3" fontSize={20} fontWeight={500}>
-                    Название функции для тестирования mqtt
-                </Typography>
+                <EditableHeading
+                    functionTitle={functionTitle}
+                    onChangeFunctionTitle={onChangeFunctionTitle}
+                />
                 <Switcher
+                    className="right-alignment"
                     state={isContentHide}
                     onClick={() => setIsContentHide(!isContentHide)}
                 />
                 <DeleteForeverIcon
                     onClick={() => removeFunctionModel(id)}
-                    className="remove-icon"
+                    className="heading_remove-icon"
                     fontSize="large"
                 />
             </div>
@@ -36,7 +40,9 @@ export const FunctionHeading = observer(
 
 type PropsType = {
     id: string;
+    functionTitle: string;
     isContentHide: boolean;
-    setIsContentHide: React.Dispatch<React.SetStateAction<boolean>>;
     removeFunctionModel: (id: string) => void;
+    onChangeFunctionTitle: (title: string) => void;
+    setIsContentHide: React.Dispatch<React.SetStateAction<boolean>>;
 };

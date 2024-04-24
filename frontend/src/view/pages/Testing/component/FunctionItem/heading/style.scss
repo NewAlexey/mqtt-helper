@@ -5,10 +5,11 @@
     justify-content: space-between;
     height: 27px;
     align-items: center;
+    gap: 10px;
 
     position: relative;
 
-    .remove-icon {
+    .heading_remove-icon {
         position: absolute;
         top: 0;
         right: -75px;

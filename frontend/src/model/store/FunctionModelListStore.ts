@@ -7,9 +7,12 @@ import { SensorModel } from "src/model/SensorModel.ts";
 const mockFunctionModel = new FunctionModelStore({
     id: "15",
     topic: "a",
+    title: "Тестовая функция",
     payloadTo: "5",
     payloadFrom: "1",
     payloadConst: "0",
+    mode: "complex",
+    implementation: "sinusoidal",
 });
 
 export class FunctionModelListStore {
@@ -24,15 +27,7 @@ export class FunctionModelListStore {
     }
 
     public addNewModel = () => {
-        this.modelList.push(
-            new FunctionModelStore({
-                id: String(new Date().getTime()),
-                topic: "",
-                payloadTo: "0",
-                payloadFrom: "0",
-                payloadConst: "0",
-            }),
-        );
+        this.modelList.push(new FunctionModelStore({}));
     };
 
     public removeModel = (id: string) => {

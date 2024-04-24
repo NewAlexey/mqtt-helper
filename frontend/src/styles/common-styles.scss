@@ -15,3 +15,11 @@
 .Mui-error {
     color: $error !important;
 }
+
+.hover-primary {
+    cursor: pointer;
+
+    &:hover {
+        color: $primary;
+    }
+}
