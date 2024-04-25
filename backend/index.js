@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
 
 app.get('/', function (req, res) {
     // Subscribe
-    req.mqttSubscribe(process.env.TOPIC_PREFIX, function (message) {
+    req.mqttSubscribe(process.env.AGROSTUB_TOPIC_PREFIX, function (message) {
         console.log('Received message: ' + message)
     })
 
@@ -57,11 +57,15 @@ app.get('/', function (req, res) {
 app.post('/topic', function (req, res) {
     const { topic, payload } = req.body;
 
+    console.log(`Data received from front - ${topic}, payload - ${payload}`);
+
     req.mqttPublish(topic, payload);
 
     res.send('MQTT is working!')
 })
 
-app.listen(process.env.MQTT_BACKEND_PORT, function () {
-    console.log(`Server is running on port ${process.env.MQTT_BACKEND_PORT}`);
+const port = process.env.BACKEND_MQTT_STUB_PORT;
+
+app.listen(port, function () {
+    console.log(`Server is running on port ${port}`);
 });

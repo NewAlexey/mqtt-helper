@@ -7,7 +7,10 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { SelectChangeEvent } from "@mui/material";
 
-import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import {
+    DeviceData,
+    SensorData,
+} from "src/model/store/FunctionModelListStore.ts";
 import { ErrorDataType } from "src/view/pages/Testing/component/FunctionItem/useErrorData.ts";
 
 export const TopicData = observer(
@@ -18,12 +21,13 @@ export const TopicData = observer(
         topicError,
         setErrorData,
         onChangeTopic,
+        deviceDataList,
         sensorDataList,
     }: PropsType) => {
-        return sensorDataList.length ? (
+        return sensorDataList.length && deviceDataList.length ? (
             <div className="data-item__content">
                 <InputLabel id="select_sensor-data" error={Boolean(topicError)}>
-                    Сенсор (топик)
+                    Сенсор/устройство (топик)
                 </InputLabel>
                 <Select
                     size="small"
@@ -45,6 +49,13 @@ export const TopicData = observer(
                             {sensorData.description}
                             {"\u00A0"}||{"\u00A0"}
                             <strong>{sensorData.topic}</strong>
+                        </MenuItem>
+                    ))}
+                    {deviceDataList.map((deviceData) => (
+                        <MenuItem key={deviceData.id} value={deviceData.topic}>
+                            {deviceData.description}
+                            {"\u00A0"}||{"\u00A0"}
+                            <strong>{deviceData.topic}</strong>
                         </MenuItem>
                     ))}
                 </Select>
@@ -83,4 +94,5 @@ type PropsType = {
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
     onChangeTopic: (topic: string) => void;
     sensorDataList: SensorData[];
+    deviceDataList: DeviceData[];
 };

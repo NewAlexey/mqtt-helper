@@ -6,9 +6,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import TextField from "@mui/material/TextField";
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
+import SaveIcon from "@mui/icons-material/Save";
+import IconButton from "@mui/material/IconButton";
 
 export const EditableHeading = observer(
-    ({ functionTitle, onChangeFunctionTitle }: PropsType) => {
+    ({
+        id,
+        functionTitle,
+        onChangeFunctionTitle,
+        isFunctionSave,
+        saveFunctionModel,
+    }: EditableHeadingProps) => {
         const [isEditTitle, setIsEditTitle] = useState(false);
         const [temporaryTitle, setTemporaryTitle] = useState(functionTitle);
 
@@ -17,11 +25,19 @@ export const EditableHeading = observer(
                 <Typography variant="h3" fontSize={20} fontWeight={500}>
                     {functionTitle}
                 </Typography>
-                <EditIcon
-                    fontSize="small"
+                <IconButton
                     className="hover-primary"
                     onClick={() => setIsEditTitle(true)}
-                />
+                >
+                    <EditIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                    disabled={isFunctionSave}
+                    onClick={() => saveFunctionModel(id)}
+                    className="hover-primary"
+                >
+                    <SaveIcon fontSize="small" />
+                </IconButton>
             </>
         ) : (
             <>
@@ -34,25 +50,31 @@ export const EditableHeading = observer(
                         setTemporaryTitle(event.target.value)
                     }
                 />
-                <DoneIcon
+                <IconButton
+                    key="done"
                     className="hover-primary"
-                    fontSize="small"
                     onClick={() => {
                         onChangeFunctionTitle(temporaryTitle);
                         setIsEditTitle(false);
                     }}
-                />
-                <CloseIcon
+                >
+                    <DoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton
                     className="hover-primary"
-                    fontSize="small"
                     onClick={() => setIsEditTitle(false)}
-                />
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
             </>
         );
     },
 );
 
-type PropsType = {
+export type EditableHeadingProps = {
+    id: string;
     functionTitle: string;
+    isFunctionSave: boolean;
+    saveFunctionModel: (id: string) => void;
     onChangeFunctionTitle: (title: string) => void;
 };

@@ -4,12 +4,14 @@ const defaultData: Omit<PropsType, "id"> = {
     mode: "single",
     topic: "",
     title: "Название функции тестирования",
-    payloadTo: "",
     frequency: 1000,
-    payloadFrom: "",
     payloadStep: "0",
-    payloadConst: "",
     implementation: "increasing",
+    payload: {
+        payloadConst: "",
+        payloadTo: "",
+        payloadFrom: "",
+    },
 };
 
 export class FunctionModel {
@@ -27,17 +29,17 @@ export class FunctionModel {
         mode,
         topic,
         title,
-        payloadTo,
+        payload,
         frequency,
-        payloadFrom,
         payloadStep,
-        payloadConst,
         implementation,
     }: FunctionModelPropsType) {
         this.payload = {
-            payloadTo: payloadTo ?? defaultData.payloadTo,
-            payloadFrom: payloadFrom ?? defaultData.payloadFrom,
-            payloadConst: payloadConst ?? defaultData.payloadConst,
+            payloadTo: payload?.payloadTo ?? defaultData.payload.payloadTo,
+            payloadFrom:
+                payload?.payloadFrom ?? defaultData.payload.payloadFrom,
+            payloadConst:
+                payload?.payloadConst ?? defaultData.payload.payloadConst,
         };
         this.id = id ?? String(new Date().getTime());
         this.title = title ?? defaultData.title;
@@ -92,11 +94,9 @@ type PropsType = {
     mode: FunctionMode;
     title: string;
     topic: string;
-    payloadTo: string;
     frequency: number;
-    payloadFrom: string;
     payloadStep: string;
-    payloadConst: string;
+    payload: FunctionPayloadType;
     implementation: FunctionImplementation;
 };
 

@@ -1,4 +1,5 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
+import isEqual from "lodash.isequal";
 
 import { Timer } from "src/utils/Timer.ts";
 import { ComplexRequest } from "src/model/store/request/ComplexRequest.ts";
@@ -12,19 +13,28 @@ export class FunctionModelStore {
     public isFetching: boolean = false;
     public isError: boolean = false;
     public isPaused: boolean = false;
-
     public functionData: FunctionModel;
 
     private readonly complexRequest: ComplexRequest = new ComplexRequest();
     private readonly apiService = MqttService;
     private readonly timer: Timer;
+    private initialFunctionData: FunctionModel;
 
     constructor(props: ConstructorPropsType) {
         this.functionData = new FunctionModel(props);
+        this.initialFunctionData = toJS(this.functionData);
         this.timer = new Timer({
             frequency: this.functionData.frequency,
         });
         makeAutoObservable(this);
+    }
+
+    public onSaveFunctionData() {
+        this.initialFunctionData = { ...this.functionData };
+    }
+
+    public get isSaved(): boolean {
+        return isEqual(toJS(this.initialFunctionData), toJS(this.functionData));
     }
 
     public onChangeFrequency = (frequency: number) => {

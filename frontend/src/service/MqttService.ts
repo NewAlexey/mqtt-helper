@@ -1,10 +1,5 @@
 class MqttService {
-    private readonly MQTT_BACKEND_PORT = process.env.MQTT_BACKEND_PORT;
-    private readonly MQTT_BACKEND_HOST = process.env.MQTT_BACKEND_HOST;
-    private readonly MQTT_BACKEND_TOPIC_ROUTE =
-        process.env.MQTT_BACKEND_TOPIC_ROUTE;
-
-    private readonly MQTT_BACKEND_URL = `http://${this.MQTT_BACKEND_HOST}:${this.MQTT_BACKEND_PORT}/${this.MQTT_BACKEND_TOPIC_ROUTE}`;
+    private readonly MQTT_BACKEND_URL = `http://${process.env.BACKEND_MQTT_STUB_PORT}:${process.env.BACKEND_MQTT_STUB_HOST}/${process.env.BACKEND_MQTT_STUB_TOPIC_ROUTE}`;
 
     public async sendMessageToMqtt(props: SendMessageToMqttPropsType) {
         await fetch(this.MQTT_BACKEND_URL, {

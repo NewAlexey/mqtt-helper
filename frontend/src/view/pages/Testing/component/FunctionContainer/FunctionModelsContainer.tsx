@@ -28,6 +28,8 @@ export const FunctionModelsContainer = observer(() => {
                         key={functionStore.functionData.id}
                         functionStore={functionStore}
                         sensorDataList={FunctionModelsStore.sensorDataList}
+                        deviceDataList={FunctionModelsStore.deviceDataList}
+                        saveFunctionModel={FunctionModelsStore.saveFunctionData}
                         removeFunctionModel={FunctionModelsStore.removeModel}
                     />
                 ))}

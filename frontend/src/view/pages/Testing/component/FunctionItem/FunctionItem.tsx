@@ -4,7 +4,10 @@ import { clsx } from "clsx";
 
 import "./style.scss";
 
-import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import {
+    DeviceData,
+    SensorData,
+} from "src/model/store/FunctionModelListStore.ts";
 import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
 import { FunctionHeading } from "src/view/pages/Testing/component/FunctionItem/heading/FunctionHeading.tsx";
 import { FunctionData } from "src/view/pages/Testing/component/FunctionItem/content/FunctionData.tsx";
@@ -14,15 +17,19 @@ import { useErrorData } from "src/view/pages/Testing/component/FunctionItem/useE
 
 type FunctionItemPropsType = {
     sensorDataList: SensorData[];
+    deviceDataList: DeviceData[];
     functionStore: FunctionModelStore;
+    saveFunctionModel: (id: string) => void;
     removeFunctionModel: (id: string) => void;
 };
 
 export const FunctionItem = observer(
     ({
         functionStore,
-        removeFunctionModel,
         sensorDataList,
+        deviceDataList,
+        saveFunctionModel,
+        removeFunctionModel,
     }: FunctionItemPropsType) => {
         const [isContentHide, setIsContentHide] = useState(false);
         const { errorData, setErrorData, clearErrorData } = useErrorData();
@@ -40,6 +47,8 @@ export const FunctionItem = observer(
             >
                 <FunctionHeading
                     id={functionStore.functionData.id}
+                    isFunctionSave={functionStore.isSaved}
+                    saveFunctionModel={saveFunctionModel}
                     isContentHide={isContentHide}
                     removeFunctionModel={removeFunctionModel}
                     setIsContentHide={setIsContentHide}
@@ -62,6 +71,7 @@ export const FunctionItem = observer(
                             topicError={errorData.topicError}
                             functionStore={functionStore}
                             sensorDataList={sensorDataList}
+                            deviceDataList={deviceDataList}
                         />
                         <ActionContainer
                             clearErrorData={clearErrorData}

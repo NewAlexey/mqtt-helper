@@ -6,13 +6,18 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import "./style.scss";
 
 import { Switcher } from "src/shared/components/switcher/Switcher.tsx";
-import { EditableHeading } from "src/view/pages/Testing/component/FunctionItem/heading/EditableHeading.tsx";
+import {
+    EditableHeading,
+    EditableHeadingProps,
+} from "src/view/pages/Testing/component/FunctionItem/heading/EditableHeading.tsx";
 
 export const FunctionHeading = observer(
     ({
         id,
         isContentHide,
         functionTitle,
+        isFunctionSave,
+        saveFunctionModel,
         setIsContentHide,
         removeFunctionModel,
         onChangeFunctionTitle,
@@ -20,8 +25,11 @@ export const FunctionHeading = observer(
         return (
             <div className="form-heading__container">
                 <EditableHeading
+                    id={id}
                     functionTitle={functionTitle}
                     onChangeFunctionTitle={onChangeFunctionTitle}
+                    isFunctionSave={isFunctionSave}
+                    saveFunctionModel={saveFunctionModel}
                 />
                 <Switcher
                     className="right-alignment"
@@ -38,11 +46,8 @@ export const FunctionHeading = observer(
     },
 );
 
-type PropsType = {
-    id: string;
-    functionTitle: string;
+type PropsType = EditableHeadingProps & {
     isContentHide: boolean;
     removeFunctionModel: (id: string) => void;
-    onChangeFunctionTitle: (title: string) => void;
     setIsContentHide: React.Dispatch<React.SetStateAction<boolean>>;
 };

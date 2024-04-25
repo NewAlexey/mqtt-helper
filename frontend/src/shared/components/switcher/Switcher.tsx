@@ -2,18 +2,22 @@ import { clsx } from "clsx";
 
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import IconButton from "@mui/material/IconButton";
 
 import "./style.scss";
 
 export function Switcher({ onClick, state, className }: SwitcherProps) {
     return (
-        <div className={clsx("switcher__container", className && className)}>
+        <IconButton
+            onClick={onClick}
+            className={clsx("switcher__container", className && className)}
+        >
             {state ? (
-                <RemoveRedEyeOutlinedIcon onClick={onClick} />
+                <RemoveRedEyeOutlinedIcon />
             ) : (
-                <VisibilityOffOutlinedIcon onClick={onClick} />
+                <VisibilityOffOutlinedIcon />
             )}
-        </div>
+        </IconButton>
     );
 }
 

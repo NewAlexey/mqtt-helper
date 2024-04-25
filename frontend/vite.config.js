@@ -18,7 +18,7 @@ export default defineConfig({
         svgr(),
     ],
     server: {
-        port: process.env.FRONTEND_PORT,
+        port: process.env.FRONTEND_MQTT_STUB_PORT,
     },
     resolve: {
         alias: {

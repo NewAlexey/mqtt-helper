@@ -6,7 +6,10 @@ import Typography from "@mui/material/Typography";
 import "./style.scss";
 
 import { FunctionModelStore } from "src/model/store/FunctionModelStore.ts";
-import { SensorData } from "src/model/store/FunctionModelListStore.ts";
+import {
+    DeviceData,
+    SensorData,
+} from "src/model/store/FunctionModelListStore.ts";
 import { ComplexPayload } from "src/view/pages/Testing/component/FunctionItem/content/components/data/ComplexPayload.tsx";
 import { ConstantPayload } from "src/view/pages/Testing/component/FunctionItem/content/components/data/ConstantPayload.tsx";
 import { TopicData } from "src/view/pages/Testing/component/FunctionItem/content/components/data/TopicData.tsx";
@@ -17,6 +20,7 @@ export const FunctionData = observer(
         topicError,
         functionStore,
         sensorDataList,
+        deviceDataList,
         setErrorData,
         payloadRangeError,
     }: PropsType) => {
@@ -48,6 +52,7 @@ export const FunctionData = observer(
                         topic={topic}
                         setErrorData={setErrorData}
                         sensorDataList={sensorDataList}
+                        deviceDataList={deviceDataList}
                         isFetching={isFetching}
                         onChangeTopic={onChangeTopic}
                     />
@@ -87,6 +92,7 @@ type PropsType = {
     topicError: string;
     payloadRangeError: string;
     sensorDataList: SensorData[];
+    deviceDataList: DeviceData[];
     functionStore: FunctionModelStore;
     setErrorData: React.Dispatch<React.SetStateAction<ErrorDataType>>;
 };
