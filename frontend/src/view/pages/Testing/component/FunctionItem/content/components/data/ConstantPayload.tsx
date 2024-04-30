@@ -18,7 +18,7 @@ export const ConstantPayload = observer(
 
         return (
             <div className="data-item__content">
-                <InputLabel id={`${id}_payload`}>Payload</InputLabel>
+                <InputLabel id={`${id}_payload`}>Задайте Payload</InputLabel>
                 <TextField
                     id={`${id}_payload`}
                     variant="outlined"

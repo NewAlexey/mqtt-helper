@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 const defaultData: Omit<PropsType, "id"> = {
     mode: "single",
     topic: "",
+    topicMode: "custom",
     title: "Название функции тестирования",
     frequency: 1000,
     payloadStep: "0",
@@ -17,6 +18,7 @@ const defaultData: Omit<PropsType, "id"> = {
 export class FunctionModel {
     public id: string;
     public topic: string;
+    public topicMode: FunctionTopicMode;
     public title: string;
     public payload: FunctionPayloadType;
     public mode: FunctionMode;
@@ -30,6 +32,7 @@ export class FunctionModel {
         topic,
         title,
         payload,
+        topicMode,
         frequency,
         payloadStep,
         implementation,
@@ -44,6 +47,7 @@ export class FunctionModel {
         this.id = id ?? String(new Date().getTime());
         this.title = title ?? defaultData.title;
         this.topic = topic ?? defaultData.topic;
+        this.topicMode = topicMode ?? defaultData.topicMode;
         this.frequency = frequency ?? defaultData.frequency;
         this.mode = mode ?? defaultData.mode;
         this.payloadStep = payloadStep ?? defaultData.payloadStep;
@@ -87,6 +91,10 @@ export class FunctionModel {
     ) => {
         this.implementation = implementation;
     };
+
+    public onChangeTopicMode = (topicMode: FunctionTopicMode) => {
+        this.topicMode = topicMode;
+    };
 }
 
 type PropsType = {
@@ -94,6 +102,7 @@ type PropsType = {
     mode: FunctionMode;
     title: string;
     topic: string;
+    topicMode: FunctionTopicMode;
     frequency: number;
     payloadStep: string;
     payload: FunctionPayloadType;
@@ -110,3 +119,4 @@ export type FunctionPayloadType = {
 
 export type FunctionMode = "single" | "periodic" | "complex";
 export type FunctionImplementation = "decreasing" | "increasing" | "sinusoidal";
+export type FunctionTopicMode = "custom" | "device";

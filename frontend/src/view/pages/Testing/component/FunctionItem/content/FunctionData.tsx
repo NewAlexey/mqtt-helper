@@ -29,7 +29,9 @@ export const FunctionData = observer(
             id,
             mode,
             topic,
+            topicMode,
             onChangeTopic,
+            onChangeTopicMode,
             payload,
             onChangePayload,
             onChangeRangePayload,
@@ -50,11 +52,13 @@ export const FunctionData = observer(
                         id={id}
                         topicError={topicError}
                         topic={topic}
+                        topicMode={topicMode}
                         setErrorData={setErrorData}
                         sensorDataList={sensorDataList}
                         deviceDataList={deviceDataList}
                         isFetching={isFetching}
                         onChangeTopic={onChangeTopic}
+                        onChangeTopicMode={onChangeTopicMode}
                     />
 
                     {mode === "complex" && (
