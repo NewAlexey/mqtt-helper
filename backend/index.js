@@ -5,8 +5,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const MQTT_HOST = process.env.MQTT_HOST;
+const MQTT_PORT = process.env.MQTT_PORT;
+const BACKEND_STUB_PORT = process.env.BACKEND_MQTT_STUB_PORT;
+const BACKEND_STUB_TOPIC_ROUTE = process.env.BACKEND_MQTT_STUB_TOPIC_ROUTE;
+
 const app = express();
-const mqttClient = mqtt.connect(`mqtt://${process.env.MQTT_HOST}:${process.env.MQTT_PORT}`);
+const mqttClient = mqtt.connect(`mqtt://${MQTT_HOST}:${MQTT_PORT}`);
 
 // Connect to the MQTT broker
 mqttClient.on('connect', function () {
@@ -26,46 +31,29 @@ app.use((req, res, next) => {
     next();
 })
 
-// MQTT middleware for publishing and subscribing
 app.use(function (req, res, next) {
-    // Publish messages
     req.mqttPublish = function (topic, message) {
         mqttClient.publish(topic, message)
     }
 
-    // Subscribe to topic
-    req.mqttSubscribe = function (topic, callback) {
-        mqttClient.subscribe(topic)
-        mqttClient.on('message', function (t, m) {
-            if (t === topic) {
-                callback(m.toString())
-            }
-        })
-    }
     next()
 })
 
-app.get('/', function (req, res) {
-    // Subscribe
-    req.mqttSubscribe(process.env.AGROSTUB_TOPIC_PREFIX, function (message) {
-        console.log('Received message: ' + message)
-    })
-
-    res.send('MQTT is working!')
-})
-
-app.post('/topic', function (req, res) {
+app.post(`/${BACKEND_STUB_TOPIC_ROUTE}`, function (req, res) {
     const { topic, payload } = req.body;
 
     console.log(`Data received from front - ${topic}, payload - ${payload}`);
 
-    req.mqttPublish(topic, payload);
+    try {
+        req.mqttPublish(topic, payload);
+        res.send('MQTT is working!')
+    } catch (error) {
+        res.send('Something wrong with mqtt.');
+        res.status(400).send(error?.message ?? `Backend works, but something went wrong when trying to to publish payload "${payload}" on topic "${topic}".`)
+    }
 
-    res.send('MQTT is working!')
 })
 
-const port = process.env.BACKEND_MQTT_STUB_PORT;
-
-app.listen(port, function () {
-    console.log(`Server is running on port ${port}`);
+app.listen(BACKEND_STUB_PORT, function () {
+    console.log(`Server is running on port ${BACKEND_STUB_PORT}`);
 });
